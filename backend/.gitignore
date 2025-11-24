@@ -1,0 +1,11 @@
+# Zarlop Backend
+
+## Archivos de Configuración
+
+### .env
+Este archivo contiene las variables de entorno. **NO SUBIR A GIT**
+
+Copia `.env.example` y renómbralo a `.env`, luego configura tus valores.
+
+### Logs
+Los archivos de log se generarán automáticamente en esta carpeta.
