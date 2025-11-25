@@ -203,7 +203,7 @@ button {
 }
 
 .logo-img {
-    height: 40px;
+    height: 65px;
     width: auto;
 }
 
@@ -750,10 +750,9 @@ button {
 }
 
 .footer-logo {
-    height: 50px;
+    height: 80px;
     width: auto;
     margin-bottom: var(--spacing-md);
-    filter: brightness(0) invert(1);
 }
 
 .footer-description {
