@@ -7,6 +7,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -28,6 +29,9 @@ app.use(cors({
 // Body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Static files
+app.use(express.static(path.join(__dirname, '..')));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -62,19 +66,9 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// Root endpoint
+// Root endpoint - serve frontend
 app.get('/', (req, res) => {
-    res.json({
-        message: 'Bienvenido a Zarlop S.A.C. API',
-        version: '1.0.0',
-        endpoints: {
-            health: '/api/health',
-            auth: '/api/auth',
-            contacts: '/api/contacts',
-            equipment: '/api/equipment',
-            services: '/api/services'
-        }
-    });
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // ===================================
@@ -83,10 +77,14 @@ app.get('/', (req, res) => {
 
 // 404 handler
 app.use((req, res) => {
-    res.status(404).json({
-        error: 'Endpoint no encontrado',
-        path: req.path
-    });
+    if (req.path.startsWith('/api/')) {
+        return res.status(404).json({
+            error: 'Endpoint no encontrado',
+            path: req.path
+        });
+    }
+
+    res.status(404).sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // Global error handler
