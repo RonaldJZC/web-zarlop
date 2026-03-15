@@ -34,15 +34,17 @@ const upload = multer({
 // Email transporter configuration
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT) || 587,
-    secure: process.env.SMTP_PORT == 465, // true for 465, false for other ports
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    secure: process.env.SMTP_PORT === '465', // true for 465, false for other ports
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASSWORD
     },
     connectionTimeout: 10000, // 10 seconds
     greetingTimeout: 10000,
-    socketTimeout: 20000
+    socketTimeout: 20000,
+    // Force IPv4 as some environments (like Render) have issues with IPv6 ENETUNREACH
+    family: 4
 });
 
 // Get all contacts
