@@ -136,7 +136,6 @@ router.post('/', upload.single('equipo_image'), async (req, res) => {
             institucion, 
             email, 
             phone, 
-            service_type, // This will be the legacy service_type field in DB
             tipo_equipo,
             tipo_falla,
             marca,
@@ -160,13 +159,9 @@ router.post('/', upload.single('equipo_image'), async (req, res) => {
             });
         }
 
-        // Get client IP and user agent
         const ip_address = req.ip || req.connection.remoteAddress;
         const user_agent = req.headers['user-agent'];
 
-        // Save to database (Mapping new fields to existing schema where possible, or we could extend it)
-        // For simplicity, we'll store extra info in the message or a JSON field if we have it.
-        // Given we don't want to run migrations right now, let's store comprehensive info in 'message' if needed.
         const fullMessage = `
 --- DETALLES PRE-DIAGNÓSTICO ---
 Institución: ${institucion || 'No especificada'}
@@ -180,14 +175,21 @@ MENSAJE:
 ${message}
         `;
 
-        const result = await query(
-            `INSERT INTO contacts (name, email, phone, service_type, message, ip_address, user_agent)
-             VALUES (?, ?, ?, ?, ?, ?, ?)`,
-            [name, email, phone, tipo_equipo, fullMessage, ip_address, user_agent]
-        );
+        // Save to database - We make this resilient for Render
+        let dbSaved = false;
+        try {
+            await query(
+                `INSERT INTO contacts (name, email, phone, service_type, message, ip_address, user_agent)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                [name, email, phone, tipo_equipo, fullMessage, ip_address, user_agent]
+            );
+            dbSaved = true;
+        } catch (dbError) {
+            console.error('Database save failed, continuing with email:', dbError.message);
+            // We don't throw here to allow email delivery even if DB is not configured
+        }
 
         // Send institutional email
-        // You will receive and review this data in the email inbox: zronald.zarlop@gmail.com
         const mailOptions = {
             from: `"Web ZARLOP" <${process.env.SMTP_USER}>`,
             to: 'zronald.zarlop@gmail.com',
@@ -231,20 +233,23 @@ ${message}
             ] : []
         };
 
-        // Send email
-        transporter.sendMail(mailOptions).catch(err => {
-            console.error('Email sending error:', err);
-        });
-
-        res.status(201).json({
-            success: true,
-            message: 'Solicitud recibida correctamente.'
-        });
+        // Try to send email
+        try {
+            await transporter.sendMail(mailOptions);
+            res.status(201).json({
+                success: true,
+                message: 'Solicitud recibida correctamente.',
+                db_status: dbSaved ? 'saved' : 'skipped'
+            });
+        } catch (emailError) {
+            console.error('Email sending failed:', emailError.message);
+            throw new Error('Error al enviar el correo de notificación: ' + emailError.message);
+        }
 
     } catch (error) {
         console.error('Diagnostic request error:', error);
         res.status(500).json({
-            error: 'Error al procesar la solicitud. Por favor intente más tarde.'
+            error: 'Error interno: ' + error.message
         });
     }
 });
