@@ -275,14 +275,29 @@ if (contactForm) {
         // Use FormData for file upload support
         const formData = new FormData(contactForm);
 
+        // Timeout controller
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 35000); // 35 second timeout
+
         try {
+            console.log('Iniciando envío de formulario a /api/contacts...');
             const response = await fetch('/api/contacts', {
                 method: 'POST',
-                // Note: Don't set Content-Type header when sending FormData
-                body: formData
+                body: formData,
+                signal: controller.signal
             });
 
-            const result = await response.json();
+            clearTimeout(timeoutId);
+            
+            let result;
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                result = await response.json();
+            } else {
+                const text = await response.text();
+                console.error('Respuesta no-JSON recibida:', text);
+                throw new Error('El servidor no respondió correctamente (no-JSON).');
+            }
 
             if (response.ok) {
                 // Show professional success message as requested
@@ -293,8 +308,15 @@ if (contactForm) {
             }
 
         } catch (error) {
-            console.error('Error:', error);
-            alert('Hubo un error al procesar la solicitud: ' + error.message);
+            clearTimeout(timeoutId);
+            console.error('Error detallado:', error);
+            
+            let errorMsg = error.message;
+            if (error.name === 'AbortError') {
+                errorMsg = 'La solicitud tardó demasiado tiempo (Tiempo de espera agotado). Por favor, verifique su conexión o intente nuevamente.';
+            }
+            
+            alert('Hubo un error al procesar la solicitud: ' + errorMsg);
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = originalBtnText;
