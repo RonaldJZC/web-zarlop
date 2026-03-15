@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libro de Reclamaciones - Zarlop S.A.C.</title>
+    <link rel="stylesheet" href="css/styles.css?v=12">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <div class="nav-logo">
+                <img src="assets/logo.png" alt="Zarlop S.A.C." class="logo-img">
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="servicios.html" class="nav-link">Servicios</a></li>
+                <li><a href="equipos.html" class="nav-link">Equipos</a></li>
+                <li><a href="nosotros.html" class="nav-link">Nosotros</a></li>
+                <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+                <li><a href="admin.html" class="nav-link nav-admin">Admin</a></li>
+            </ul>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Subpage Hero -->
+    <header class="subpage-hero">
+        <div class="container animate-fade-in">
+            <h1 class="subpage-title">Libro de Reclamaciones</h1>
+            <p class="subpage-subtitle" style="color: white; opacity: 0.9; margin-top: 10px; font-size: 18px;">Registra tu reclamo o queja de manera virtual, conforme a la normativa de protección al consumidor.</p>
+            <div class="subpage-breadcrumb" style="margin-top: 20px;">
+                <a href="index.html">Inicio</a> / <span>Libro de Reclamaciones</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Intro Section -->
+    <section class="claims-intro">
+        <div class="container">
+            <div class="claims-intro-grid">
+                <div class="claims-legal-text fade-up">
+                    <h2 class="section-title">Atención Directa al Consumidor</h2>
+                    <p>Conforme a lo establecido en la normativa vigente de protección y defensa del consumidor, ponemos a disposición de nuestros clientes el presente Libro de Reclamaciones Virtual.</p>
+                    <p>A través de este formulario, usted podrá registrar reclamos o quejas relacionados con los servicios brindados por ZARLOP S.A.C. La información proporcionada será tratada con confidencialidad y utilizada únicamente para la gestión y atención de su caso, dentro de los plazos establecidos por la normativa aplicable.</p>
+                </div>
+                <div class="claims-company-card fade-up">
+                    <h3>ZARLOP S.A.C.</h3>
+                    <div class="company-info-item">
+                        <span>Razón Social</span>
+                        <p>ZARLOP S.A.C.</p>
+                    </div>
+                    <div class="company-info-item">
+                        <span>RUC</span>
+                        <p>20602591868</p>
+                    </div>
+                    <div class="company-info-item">
+                        <span>Dirección Legal</span>
+                        <p>Mza. A Lote 4 A.V. 14 de Abril, Ate, Lima, Perú</p>
+                    </div>
+                    <div class="company-info-item">
+                        <span>Correo Electrónico</span>
+                        <p>zronald.zarlop@gmail.com</p>
+                    </div>
+                    <div class="company-info-item">
+                        <span>Teléfono de Atención</span>
+                        <p>+51 942 803 666</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Claims Form -->
+    <section class="claims-form-section">
+        <div class="container">
+            <form action="#" id="claimsForm">
+                
+                <!-- SECTION 1: Datos del consumidor -->
+                <div class="form-step-card fade-up">
+                    <div class="step-card-header">
+                        <span class="step-number">PASO 1</span>
+                        <h3 class="step-title">1. Datos del Consumidor</h3>
+                    </div>
+                    <div class="claims-grid">
+                        <div class="form-group">
+                            <label>Nombres y Apellidos</label>
+                            <input type="text" placeholder="Ej. Juan Pérez" required>
+                        </div>
+                        <div class="form-group">
+                            <label>DNI / CE</label>
+                            <input type="text" placeholder="Número de documento" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Domicilio</label>
+                            <input type="text" placeholder="Dirección completa" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono / Celular</label>
+                            <input type="tel" placeholder="999 999 999" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Correo Electrónico</label>
+                            <input type="email" placeholder="usuario@ejemplo.com" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: Datos del producto o servicio -->
+                <div class="form-step-card fade-up">
+                    <div class="step-card-header">
+                        <span class="step-number">PASO 2</span>
+                        <h3 class="step-title">2. Datos del Producto o Servicio</h3>
+                    </div>
+                    <div class="claims-grid">
+                        <div class="form-group">
+                            <label>Tipo de Bien</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="bien_tipo" value="producto" checked>
+                                    <span>Producto</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="bien_tipo" value="servicio">
+                                    <span>Servicio</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Monto Reclamado (S/)</label>
+                            <input type="number" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Descripción del Bien o Servicio</label>
+                            <textarea rows="3" placeholder="Detalle el equipo o servicio adquirido..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: Detalle del reclamo o queja -->
+                <div class="form-step-card fade-up">
+                    <div class="step-card-header">
+                        <span class="step-number">PASO 3</span>
+                        <h3 class="step-title">3. Detalle del Reclamo o Queja</h3>
+                    </div>
+                    <div class="claims-grid">
+                        <div class="form-group full-width">
+                            <label>Tipo de Reclamación</label>
+                            <div class="radio-group" style="flex-direction: column; gap: 15px;">
+                                <label class="radio-option">
+                                    <input type="radio" name="reclamacion_tipo" value="reclamo" checked>
+                                    <div>
+                                        <strong>Reclamo:</strong> <span style="font-size: 14px; opacity: 0.8;">Disconformidad relacionada con los servicios o productos brindados.</span>
+                                    </div>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="reclamacion_tipo" value="queja">
+                                    <div>
+                                        <strong>Queja:</strong> <span style="font-size: 14px; opacity: 0.8;">Malestar o descontento respecto a la atención recibida, sin implicar necesariamente una disconformidad directa con el servicio o producto.</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Detalle del Reclamo o Queja</label>
+                            <textarea rows="5" placeholder="Explique detenidamente lo sucedido..." required></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Pedido del Consumidor</label>
+                            <textarea rows="3" placeholder="¿Qué solución solicita?"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 4: Confirmación y envío -->
+                <div class="form-step-card fade-up">
+                    <div class="step-card-header">
+                        <span class="step-number">PASO 4</span>
+                        <h3 class="step-title">4. Confirmación y Envío</h3>
+                    </div>
+                    <div class="privacy-note" style="background: var(--bg-secondary); padding: 20px; border-radius: 15px; margin-bottom: 25px;">
+                        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 15px;">
+                            <strong>Aviso de Privacidad:</strong> ZARLOP S.A.C. informa que los datos personales proporcionados en este formulario serán tratados de forma confidencial y utilizados exclusivamente para la atención y seguimiento del reclamo o queja presentada. Los datos serán conservados durante el plazo exigido por la normativa aplicable.
+                        </p>
+                        <label class="radio-option" style="align-items: flex-start;">
+                            <input type="checkbox" required style="margin-top: 4px;">
+                            <span style="font-size: 13px; color: var(--text-primary); font-weight: 500;">
+                                Declaro que los datos consignados en el presente formulario son veraces y autorizo su tratamiento para la gestión de mi reclamo o queja, conforme a la normativa vigente sobre protección de datos personales.
+                            </span>
+                        </label>
+                    </div>
+                    <div class="form-actions" style="text-align: center;">
+                        <button type="submit" class="btn btn-primary btn-lg">Enviar Reclamo / Queja</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <img src="assets/logo-footer.png" alt="Zarlop S.A.C." class="footer-logo logo-white">
+                    <p class="footer-description">
+                        Soluciones especializadas en ingeniería biomédica y mantenimiento electrónico de alta precisión.
+                    </p>
+                    <span class="footer-ruc">RUC: 20602591868</span>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="servicios.html">Mantenimiento Médico</a></li>
+                        <li><a href="servicios.html">Instalación Técnica</a></li>
+                        <li><a href="servicios.html">Asesoría Biomédica</a></li>
+                        <li><a href="servicios.html">Gestión de Equipos</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Navegación</h4>
+                    <ul class="footer-links">
+                        <li><a href="nosotros.html">Nosotros</a></li>
+                        <li><a href="equipos.html">Equipos</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                        <li><a href="admin.html">Portal Admin</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <div class="footer-claims">
+                        <svg class="claims-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                        <h4>Libro de Reclamaciones</h4>
+                        <p>Presenta tu reclamo o queja de forma virtual, de manera rápida y segura.</p>
+                        <a href="libro-reclamaciones.html" class="btn-claims">
+                            <span>Ir al Libro de Reclamaciones</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Zarlop S.A.C. - Soluciones Electrónicas y Biomédicas. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-float">
+        <span class="whatsapp-tooltip">Asistente ZARLOP - Contáctanos por WhatsApp</span>
+        <a href="https://wa.me/51942803666?text=Hola,%20estoy%20interesado%20en%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20ingenier%C3%ADa%20biom%C3%A9dica%20de%20ZARLOP%20S.A.C." class="whatsapp-btn" target="_blank">
+            <svg viewBox="0 0 448 512">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.1 106 27.1h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.5 5.5-9.2 1.9-3.7 1-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+            </svg>
+        </a>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

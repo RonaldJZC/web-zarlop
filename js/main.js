@@ -125,26 +125,20 @@ navToggle.addEventListener('click', () => {
     navMenu.classList.toggle('active');
 });
 
-// Active link on scroll
-window.addEventListener('scroll', () => {
-    let current = '';
-    const sections = document.querySelectorAll('section[id]');
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(link => {
+// Active link based on current page URL
+const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+navLinks.forEach(link => {
+    const linkHref = link.getAttribute('href');
+    if (linkHref === currentPath) {
+        link.classList.add('active');
+    } else {
         link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
+    }
 });
+
+// Remove scroll-based active link detection as we are now multi-page
+// (Keeping smooth scroll logic ONLY if a link contains a hash for intra-page jumps)
+
 
 // Smooth scroll for navigation links
 navLinks.forEach(link => {
@@ -171,6 +165,8 @@ const categoryBtns = document.querySelectorAll('.category-btn');
 
 // Render equipment items
 function renderEquipment(category = 'all') {
+    if (!equipmentGrid) return; // Guard for pages without equipment catalog
+    
     const filteredEquipment = category === 'all'
         ? equipmentData
         : equipmentData.filter(item => item.category === category);
@@ -221,7 +217,9 @@ categoryBtns.forEach(btn => {
 });
 
 // Initial render
-renderEquipment();
+if (equipmentGrid) {
+    renderEquipment();
+}
 
 // ===================================
 // STATISTICS COUNTER
@@ -275,45 +273,62 @@ if (aboutSection) {
 
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        service: document.getElementById('service').value,
-        message: document.getElementById('message').value,
-        timestamp: new Date().toISOString()
-    };
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            service: document.getElementById('service').value,
+            message: document.getElementById('message').value,
+            timestamp: new Date().toISOString()
+        };
 
-    try {
-        // Save to localStorage (simulating database)
-        const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-        contacts.push(formData);
-        localStorage.setItem('contacts', JSON.stringify(contacts));
+        try {
+            // Save to localStorage (simulating database)
+            const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+            contacts.push(formData);
+            localStorage.setItem('contacts', JSON.stringify(contacts));
 
-        // Show success message
-        alert('¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
-        contactForm.reset();
+            // Show success message
+            alert('¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
+            contactForm.reset();
 
-        // In production, this would send to backend API
-        // await fetch('/api/contact', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(formData)
-        // });
+            // In production, this would send to backend API
+            // await fetch('/api/contact', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(formData)
+            // });
 
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Hubo un error al enviar el formulario. Por favor, intenta nuevamente.');
-    }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un error al enviar el formulario. Por favor, intenta nuevamente.');
+        }
+    });
+}
+
+// ===================================
+// Premium Reveal Animations (Apple-style)
+// ===================================
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Option: unobserve after reveal if you only want it once
+            // revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => {
+    revealObserver.observe(el);
 });
 
-// ===================================
-// AOS (Animate On Scroll) Simulation
-// ===================================
-
+// Original AOS-like Observer (legacy fallback/logic)
 const observeElements = document.querySelectorAll('[data-aos]');
 
 const aosObserver = new IntersectionObserver((entries) => {
