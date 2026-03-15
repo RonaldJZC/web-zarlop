@@ -8,97 +8,85 @@ const equipmentData = [
         id: 1,
         name: 'Analizador Bioquímico',
         category: 'laboratorio',
-        description: 'Equipos de análisis clínico automatizado para pruebas bioquímicas',
-        image: 'assets/images/equipos/analizador.jpg',
-        icon: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z'
+        description: 'Experiencia en diagnóstico electrónico, reparación de módulos, calibración y mantenimiento de sistemas automatizados de análisis clínico.',
+        image: 'assets/images/equipos/analizador.png'
     },
     {
         id: 2,
         name: 'Desfibrilador',
         category: 'emergencia',
-        description: 'Equipos de emergencia para reanimación cardiopulmonar',
-        image: null,
-        icon: 'M13 10V3L4 14h7v7l9-11h-7z'
+        description: 'Soporte técnico especializado en revisión de circuitos de descarga, reemplazo de baterías y calibración de energía de desfibrilación.',
+        image: 'assets/images/equipos/desfibrilador.png'
     },
     {
         id: 3,
         name: 'Monitor de Signos Vitales',
         category: 'emergencia',
-        description: 'Monitoreo continuo de signos vitales en tiempo real',
-        image: null,
-        icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
+        description: 'Diagnóstico de fallas en sensores, reparación de tarjetas de procesamiento y mantenimiento preventivo de monitores multiparámetros.',
+        image: 'assets/images/equipos/monitor_signos.png'
     },
     {
         id: 4,
-        name: 'Electrocardiografo',
+        name: 'Electrocardiógrafo',
         category: 'consultorio',
-        description: 'Registro de actividad eléctrica del corazón',
-        image: null,
-        icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
+        description: 'Reparación de sistemas de adquisición de señal, calibración de impresión térmica y limpieza técnica de cabezales y sensores.',
+        image: 'assets/images/equipos/electrocardiografo.png'
     },
     {
         id: 5,
         name: 'Microscopio Digital',
         category: 'laboratorio',
-        description: 'Microscopía avanzada con captura digital de imágenes',
-        image: 'assets/images/equipos/microscopio.jpg',
-        icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7'
+        description: 'Mantenimiento óptico de precisión, alineación de sistemas de iluminación LED y reparación de sensores de captura digital.',
+        image: 'assets/images/equipos/microscopio.png'
     },
     {
         id: 6,
         name: 'Ventilador Mecánico',
         category: 'emergencia',
-        description: 'Soporte respiratorio para cuidados intensivos',
-        image: null,
-        icon: 'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4'
+        description: 'Servicio técnico de alta complejidad en sistemas neumáticos, calibración de mezcladores de aire/O2 y pruebas de fugas.',
+        image: 'assets/images/equipos/ventilador.png'
     },
     {
         id: 7,
         name: 'Ultrasonido Doppler',
-        category: 'diagnostico',
-        description: 'Diagnóstico por imágenes con tecnología Doppler',
-        image: null,
-        icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
+        category: 'diagnóstico',
+        description: 'Diagnóstico electrónico de consolas, reparación de transductores y optimización de software de procesamiento de imagen Doppler.',
+        image: 'assets/images/equipos/ultrasonido.png'
     },
     {
         id: 8,
         name: 'Autoclave',
         category: 'laboratorio',
-        description: 'Esterilización de instrumental médico',
-        image: 'assets/images/equipos/autoclave.jpg',
-        icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'
+        description: 'Mantenimiento integral de sistemas de presión, cambio de empaques, limpieza de válvulas y calibración de ciclos de esterilización.',
+        image: 'assets/images/equipos/autoclave.png'
     },
     {
         id: 9,
         name: 'Equipo de Rayos X',
-        category: 'diagnostico',
-        description: 'Radiología digital para diagnóstico por imágenes',
-        image: null,
-        icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
+        category: 'diagnóstico',
+        description: 'Reparación de generadores de alta tensión, calibración de colimadores y mantenimiento de sistemas de radiología digital.',
+        image: 'assets/images/equipos/rayos_x.png'
     },
     {
         id: 10,
         name: 'Bomba de Infusión',
         category: 'emergencia',
-        description: 'Administración controlada de medicamentos',
-        image: null,
-        icon: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+        description: 'Calibración de precisión de flujo, reparación de sensores de oclusión y aire en línea, y mantenimiento de mecanismos de bombeo.',
+        image: 'assets/images/equipos/bomba_infusion.png'
     },
     {
         id: 11,
-        name: 'Centrifuga de Laboratorio',
+        name: 'Centrífuga de Laboratorio',
         category: 'laboratorio',
-        description: 'Separación de componentes sanguíneos',
-        image: 'assets/images/equipos/centrifuga.jpg',
-        icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'
+        description: 'Mantenimiento de motores, balanceo técnico de rotores, reparación de sistemas de control de velocidad y tiempo.',
+        image: 'assets/images/equipos/centrifuga.png'
     },
     {
         id: 12,
         name: 'Otoscopio Digital',
         category: 'consultorio',
-        description: 'Examen visual del oído con captura de imágenes',
-        image: null,
-        icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+        description: 'Reparación de sistemas de iluminación de fibra óptica y mantenimiento de la interfaz de captura de imagen digital.',
+        image: 'assets/images/equipos/otoscopio.png'
     }
 ];
 
@@ -172,22 +160,22 @@ function renderEquipment(category = 'all') {
         : equipmentData.filter(item => item.category === category);
 
     equipmentGrid.innerHTML = filteredEquipment.map(item => {
-        const imageStyle = item.image ? `background-image: url('${item.image}'); background-size: cover; background-position: center;` : '';
-        const showIcon = !item.image;
+        const imageStyle = `background-image: url('${item.image}'); background-size: contain; background-repeat: no-repeat; background-position: center;`;
 
         return `
             <div class="equipment-item" data-category="${item.category}">
                 <div class="equipment-image" style="${imageStyle}">
-                    ${showIcon ? `
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="${item.icon}"/>
-                        </svg>
-                    ` : ''}
                 </div>
                 <div class="equipment-content">
                     <h3 class="equipment-title">${item.name}</h3>
                     <span class="equipment-category">${getCategoryName(item.category)}</span>
                     <p class="equipment-description">${item.description}</p>
+                    <a href="contacto.html?service=tecnico&equipment=${encodeURIComponent(item.name)}" class="btn-tech-service">
+                        <span>Solicitar servicio técnico</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
                 </div>
             </div>
         `;
@@ -200,7 +188,7 @@ function getCategoryName(category) {
         'laboratorio': 'Laboratorio',
         'emergencia': 'Emergencia',
         'consultorio': 'Consultorio',
-        'diagnostico': 'Diagnóstico'
+        'diagnóstico': 'Diagnóstico'
     };
     return names[category] || category;
 }
@@ -277,35 +265,39 @@ if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            service: document.getElementById('service').value,
-            message: document.getElementById('message').value,
-            timestamp: new Date().toISOString()
-        };
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando Solicitud...';
+
+        // Use FormData for file upload support
+        const formData = new FormData(contactForm);
 
         try {
-            // Save to localStorage (simulating database)
-            const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
-            contacts.push(formData);
-            localStorage.setItem('contacts', JSON.stringify(contacts));
+            const response = await fetch('/api/contacts', {
+                method: 'POST',
+                // Note: Don't set Content-Type header when sending FormData
+                body: formData
+            });
 
-            // Show success message
-            alert('¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
-            contactForm.reset();
+            const result = await response.json();
 
-            // In production, this would send to backend API
-            // await fetch('/api/contact', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(formData)
-            // });
+            if (response.ok) {
+                // Show professional success message as requested
+                alert('Su solicitud ha sido enviada correctamente. Nos comunicaremos con usted a la brevedad.');
+                contactForm.reset();
+            } else {
+                throw new Error(result.error || 'Error al enviar la solicitud');
+            }
 
         } catch (error) {
             console.error('Error:', error);
-            alert('Hubo un error al enviar el formulario. Por favor, intenta nuevamente.');
+            alert('Hubo un error al procesar la solicitud: ' + error.message);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
         }
     });
 }

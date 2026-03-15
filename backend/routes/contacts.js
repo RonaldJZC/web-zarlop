@@ -6,6 +6,41 @@ const express = require('express');
 const router = express.Router();
 const { query } = require('../config/database');
 const validator = require('validator');
+const nodemailer = require('nodemailer');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const uploadDir = 'uploads/';
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir);
+        }
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+});
+
+// Email transporter configuration
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
+    port: process.env.SMTP_PORT || 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD
+    }
+});
 
 // Get all contacts
 router.get('/', async (req, res) => {
@@ -93,15 +128,28 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Create new contact
-router.post('/', async (req, res) => {
+// Create new diagnostic request (Pre-Diagnóstico Técnico)
+router.post('/', upload.single('equipo_image'), async (req, res) => {
     try {
-        const { name, email, phone, service_type, message } = req.body;
+        const { 
+            name, 
+            institucion, 
+            email, 
+            phone, 
+            service_type, // This will be the legacy service_type field in DB
+            tipo_equipo,
+            tipo_falla,
+            marca,
+            modelo,
+            message 
+        } = req.body;
+
+        const file = req.file;
 
         // Validate required fields
-        if (!name || !email || !phone || !service_type || !message) {
+        if (!name || !email || !phone || !tipo_equipo || !tipo_falla || !message) {
             return res.status(400).json({
-                error: 'Todos los campos son requeridos'
+                error: 'Los campos marcados como obligatorios son requeridos.'
             });
         }
 
@@ -116,29 +164,87 @@ router.post('/', async (req, res) => {
         const ip_address = req.ip || req.connection.remoteAddress;
         const user_agent = req.headers['user-agent'];
 
+        // Save to database (Mapping new fields to existing schema where possible, or we could extend it)
+        // For simplicity, we'll store extra info in the message or a JSON field if we have it.
+        // Given we don't want to run migrations right now, let's store comprehensive info in 'message' if needed.
+        const fullMessage = `
+--- DETALLES PRE-DIAGNÓSTICO ---
+Institución: ${institucion || 'No especificada'}
+Tipo Equipo: ${tipo_equipo}
+Tipo Falla: ${tipo_falla}
+Marca: ${marca || 'N/A'}
+Modelo: ${modelo || 'N/A'}
+Imagen: ${file ? file.filename : 'Sin imagen'}
+-----------------------------
+MENSAJE:
+${message}
+        `;
+
         const result = await query(
             `INSERT INTO contacts (name, email, phone, service_type, message, ip_address, user_agent)
              VALUES (?, ?, ?, ?, ?, ?, ?)`,
-            [name, email, phone, service_type, message, ip_address, user_agent]
+            [name, email, phone, tipo_equipo, fullMessage, ip_address, user_agent]
         );
+
+        // Send institutional email
+        // You will receive and review this data in the email inbox: zronald.zarlop@gmail.com
+        const mailOptions = {
+            from: `"Web ZARLOP" <${process.env.SMTP_USER}>`,
+            to: 'zronald.zarlop@gmail.com',
+            subject: 'Solicitud enviada desde la web ZARLOP',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
+                    <div style="background: #0F6CBD; padding: 15px; border-radius: 8px 8px 0 0; text-align: center;">
+                        <h1 style="color: white; margin: 0; font-size: 20px;">Solicitud de Pre-Diagnóstico Técnico</h1>
+                    </div>
+                    
+                    <div style="padding: 20px; color: #333;">
+                        <h2 style="color: #0F6CBD; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 8px;">Datos del Solicitante</h2>
+                        <p><strong>Nombre Completo:</strong> ${name}</p>
+                        <p><strong>Institución/Clínica:</strong> ${institucion || 'N/A'}</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Teléfono:</strong> ${phone}</p>
+                        
+                        <h2 style="color: #0F6CBD; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-top: 25px;">Información del Equipo</h2>
+                        <p><strong>Tipo de Equipo:</strong> ${tipo_equipo}</p>
+                        <p><strong>Tipo de Falla:</strong> ${tipo_falla}</p>
+                        <p><strong>Marca:</strong> ${marca || 'N/A'}</p>
+                        <p><strong>Modelo:</strong> ${modelo || 'N/A'}</p>
+                        
+                        <h2 style="color: #0F6CBD; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-top: 25px;">Descripción de la Falla</h2>
+                        <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; border-left: 4px solid #0F6CBD;">
+                            ${message.replace(/\n/g, '<br>')}
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; font-size: 12px; color: #777; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
+                        Este mensaje fue enviado desde el formulario de Pre-Diagnóstico de la web Zarlop S.A.C.
+                        ${file ? '<br><strong>Se ha adjuntado una imagen del equipo.</strong>' : ''}
+                    </div>
+                </div>
+            `,
+            attachments: file ? [
+                {
+                    filename: file.originalname,
+                    path: file.path
+                }
+            ] : []
+        };
+
+        // Send email
+        transporter.sendMail(mailOptions).catch(err => {
+            console.error('Email sending error:', err);
+        });
 
         res.status(201).json({
             success: true,
-            message: 'Contacto creado exitosamente',
-            data: {
-                id: result.insertId,
-                name,
-                email,
-                phone,
-                service_type,
-                message
-            }
+            message: 'Solicitud recibida correctamente.'
         });
 
     } catch (error) {
-        console.error('Create contact error:', error);
+        console.error('Diagnostic request error:', error);
         res.status(500).json({
-            error: 'Error al crear contacto'
+            error: 'Error al procesar la solicitud. Por favor intente más tarde.'
         });
     }
 });
@@ -249,3 +355,4 @@ router.get('/stats/summary', async (req, res) => {
 });
 
 module.exports = router;
+

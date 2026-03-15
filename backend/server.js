@@ -47,12 +47,10 @@ app.use('/api/', limiter);
 
 // Import routes
 const contactRoutes = require('./routes/contacts');
-const contactRoutes = require('./routes/contacts');
 const equipmentRoutes = require('./routes/equipment');
 const serviceRoutes = require('./routes/services');
 
 // Use routes
-app.use('/api/contacts', contactRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/equipment', equipmentRoutes);
 app.use('/api/services', serviceRoutes);
