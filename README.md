@@ -14,17 +14,15 @@ Sistema web completo para **Zarlop S.A.C.**, empresa especializada en mantenimie
 - ✅ Sistema de navegación fluido
 - ✅ Formulario de contacto funcional
 - ✅ Catálogo de equipos médicos con filtros
-- ✅ Sección de servicios detallada
-- ✅ Panel de administración completo
+- ✅ Página de servicios dinámica con imágenes premium
+- ✅ Libro de Reclamaciones virtual
 - ✅ Optimizado para SEO
 
 ### Backend (API REST)
 - ✅ Node.js + Express
-- ✅ Autenticación JWT
 - ✅ Base de datos MySQL
-- ✅ Endpoints CRUD completos
-- ✅ Validación de datos
-- ✅ Rate limiting
+- ✅ Registro de solicitudes de contacto
+- ✅ Gestión de catálogo de equipos
 - ✅ Seguridad con Helmet
 - ✅ CORS configurado
 
@@ -42,15 +40,18 @@ Sistema web completo para **Zarlop S.A.C.**, empresa especializada en mantenimie
 ```
 d:/antigravity/
 ├── index.html              # Página principal
-├── admin.html              # Panel de administración
+├── servicios.html          # Ingeniería Biomédica Detallada
+├── equipos.html            # Catálogo de Equipos
+├── nosotros.html           # Sobre la empresa
+├── contacto.html           # Formulario de contacto
+├── libro-reclamaciones.html # Libro de Reclamaciones
 ├── css/
-│   ├── styles.css          # Estilos principales
-│   └── admin.css           # Estilos del admin
+│   └── styles.css          # Estilos globales y premium
 ├── js/
-│   ├── main.js             # JavaScript principal
-│   └── admin.js            # JavaScript del admin
+│   └── main.js             # Lógica interactiva
 ├── assets/
-│   └── logo.png            # Logo de Zarlop
+│   ├── logo.png            # Logo de Zarlop
+│   └── images/             # Imágenes premium del sitio
 ├── backend/
 │   ├── server.js           # Servidor Express
 │   ├── package.json        # Dependencias
@@ -58,7 +59,6 @@ d:/antigravity/
 │   ├── config/
 │   │   └── database.js     # Configuración DB
 │   ├── routes/
-│   │   ├── auth.js         # Rutas de autenticación
 │   │   ├── contacts.js     # Rutas de contactos
 │   │   ├── equipment.js    # Rutas de equipos
 │   │   └── services.js     # Rutas de servicios
@@ -134,44 +134,15 @@ El servidor estará corriendo en: `http://localhost:3000`
    - Frontend: `http://localhost:8000` (o el puerto que uses)
    - Backend API: `http://localhost:3000`
 
-## 👤 Credenciales de Administrador
-
-**Panel de Administración:** `admin.html`
-
-```
-Usuario: admin
-Contraseña: zarlop2025
-```
-
 ## 📡 API Endpoints
 
-### Autenticación
-- `POST /api/auth/login` - Iniciar sesión
-- `GET /api/auth/verify` - Verificar token
-- `POST /api/auth/logout` - Cerrar sesión
-
 ### Contactos
-- `GET /api/contacts` - Listar contactos
-- `GET /api/contacts/:id` - Obtener contacto
-- `POST /api/contacts` - Crear contacto
-- `PATCH /api/contacts/:id/status` - Actualizar estado
-- `DELETE /api/contacts/:id` - Eliminar contacto
-- `GET /api/contacts/stats/summary` - Estadísticas
+- `POST /api/contacts` - Crear una nueva solicitud de mantenimiento
+- `GET /api/contacts` - Listar contactos (requiere config de seguridad)
 
 ### Equipos
-- `GET /api/equipment` - Listar equipos
-- `GET /api/equipment/:id` - Obtener equipo
-- `POST /api/equipment` - Crear equipo
-- `PUT /api/equipment/:id` - Actualizar equipo
-- `DELETE /api/equipment/:id` - Eliminar equipo
-- `GET /api/equipment/category/:category` - Por categoría
-
-### Servicios
-- `GET /api/services` - Listar servicios
-- `GET /api/services/:id` - Obtener servicio
-- `POST /api/services` - Crear servicio
-- `PUT /api/services/:id` - Actualizar servicio
-- `DELETE /api/services/:id` - Eliminar servicio
+- `GET /api/equipment` - Obtener catálogo de equipos
+- `GET /api/equipment/category/:category` - Filtrar por categoría
 
 ## 🗄️ Estructura de la Base de Datos
 
@@ -188,15 +159,9 @@ Contraseña: zarlop2025
 
 ## 🎨 Características de Diseño
 
-- **Colores principales:**
-  - Azul primario: `#0066cc`
-  - Verde secundario: `#00c896`
-  - Gradientes premium
-
-- **Tipografía:** Inter (Google Fonts)
-- **Animaciones:** Transiciones suaves y efectos hover
-- **Responsive:** Optimizado para móvil, tablet y desktop
-- **Accesibilidad:** Estructura semántica HTML5
+- **Estética Premium**: Uso de gradientes profundos, sombras suaves y tipografía moderna (Inter).
+- **Interactividad**: Animaciones de entrada (fade-up) y efectos hover en tarjetas.
+- **Responsivo**: Adaptación completa a dispositivos móviles y tablets.
 
 ## 🔐 Seguridad
 
