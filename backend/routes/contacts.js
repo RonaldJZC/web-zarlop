@@ -10,6 +10,7 @@ const nodemailer = require('nodemailer');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const dns = require('dns');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -44,7 +45,11 @@ const transporter = nodemailer.createTransport({
     greetingTimeout: 10000,
     socketTimeout: 20000,
     // Force IPv4 as some environments (like Render) have issues with IPv6 ENETUNREACH
-    family: 4
+    family: 4,
+    // Definitively force IPv4 by overriding DNS lookup
+    lookup: (hostname, options, callback) => {
+        return dns.lookup(hostname, { family: 4 }, callback);
+    }
 });
 
 // Get all contacts
