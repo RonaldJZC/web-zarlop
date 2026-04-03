@@ -157,96 +157,110 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             container.innerHTML = `
-                <div style="padding: 40px; color: #333; position: relative;">
-                    <!-- Cabecera -->
-                    <div style="display: flex; justify-content: space-between; border-bottom: 3px solid #0F6CBD; padding-bottom: 20px; margin-bottom: 30px;">
-                        <div>
-                            <!-- Img must have crossorigin if generated dynamically, but relative is fine for html2canvas as long as it's same domain -->
-                            <img src="../assets/logo.png" style="width: 250px; margin-bottom: 10px;">
-                            <div style="font-size: 11px; color: #666; line-height: 1.5;">
-                                <strong>ZARLOP S.A.C.</strong><br>
-                                Soluciones Electrónicas y Biomédicas<br>
-                                RUC: 20602591868<br>
-                                Lima, Perú | (+51) 949 035 072
+                <div style="padding: 50px; color: #1E293B; position: relative; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; min-height: 1000px;">
+                    
+                    <!-- Faint Watermark -->
+                    <div style="position: absolute; top: 40%; left: 10%; opacity: 0.03; transform: rotate(-25deg); font-size: 180px; font-weight: 900; color: #0F6CBD; pointer-events: none; z-index: 0;">ZARLOP</div>
+                    
+                    <div style="position: relative; z-index: 1;">
+                        <!-- Cabecera -->
+                        <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #E2E8F0; padding-bottom: 30px; margin-bottom: 40px;">
+                            <div>
+                                <img src="../assets/logo.png" style="width: 250px; margin-bottom: 15px;">
+                                <div style="font-size: 12px; color: #64748B; line-height: 1.6;">
+                                    <strong>ZARLOP S.A.C.</strong><br>
+                                    Servicios de Ingeniería Clínica y Soporte Técnico<br>
+                                    RUC: 20602591868<br>
+                                    Lima, Perú | (+51) 949 035 072 | info@zarlop.pe
+                                </div>
                             </div>
-                        </div>
-                        <div style="text-align: right;">
-                            <h1 style="color: #0F6CBD; font-size: 28px; margin: 0 0 5px 0;">COTIZACIÓN</h1>
-                            <div style="background: #f4f4f4; padding: 10px; border-radius: 5px; display: inline-block;">
-                                <strong style="color: #000;">N°: ${data.numero}</strong><br>
-                                Fecha: ${data.fecha}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Datos Cliente -->
-                    <div style="display: flex; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 30px; overflow: hidden;">
-                        <div style="width: 50%; padding: 15px; border-right: 1px solid #ddd;">
-                            <div style="font-size: 10px; color: #666; text-transform: uppercase; margin-bottom: 5px;">Información del Cliente</div>
-                            <strong style="display:block; font-size: 14px;">${data.cliente}</strong>
-                            <div style="font-size: 12px; margin-top: 5px;"><strong>RUC:</strong> ${data.ruc}</div>
-                            <div style="font-size: 12px; margin-top: 2px;"><strong>Atención a:</strong> ${data.contacto}</div>
-                            <div style="font-size: 12px; margin-top: 2px;"><strong>Dirección:</strong> ${data.direccion}</div>
-                        </div>
-                        <div style="width: 50%; padding: 15px; background: #fafafa;">
-                            <div style="font-size: 10px; color: #666; text-transform: uppercase; margin-bottom: 5px;">Detalles del Requerimiento</div>
-                            <div style="font-size: 12px; margin-top: 2px;"><strong>Asunto:</strong> ${data.asunto}</div>
-                            <div style="font-size: 12px; margin-top: 2px;"><strong>Equipo:</strong> ${data.equipo}</div>
-                            <div style="font-size: 12px; margin-top: 2px;"><strong>Serie:</strong> ${data.serie}</div>
-                        </div>
-                    </div>
-
-                    <!-- Tabla de Cotizacioon -->
-                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
-                        <thead>
-                            <tr style="background: #0F6CBD; color: white;">
-                                <th style="padding: 10px; text-align: center; width: 5%;">Ítem</th>
-                                <th style="padding: 10px; text-align: left; width: 50%;">Descripción del Servicio / Repuesto</th>
-                                <th style="padding: 10px; text-align: center; width: 10%;">Cant.</th>
-                                <th style="padding: 10px; text-align: right; width: 15%;">P. Unit.</th>
-                                <th style="padding: 10px; text-align: right; width: 20%;">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${itemsHTML}
-                        </tbody>
-                    </table>
-
-                    <!-- Totales y Condiciones -->
-                    <div style="display: flex; justify-content: space-between;">
-                        <div style="width: 60%; font-size: 11px; color: #444;">
-                            <strong style="color:#0F6CBD;">Términos y Condiciones:</strong>
-                            <ul style="padding-left: 15px; margin-top: 5px;">
-                                <li><strong>Tiempo de entrega:</strong> ${data.entrega}</li>
-                                <li><strong>Condición de pago:</strong> ${data.pago}</li>
-                                <li><strong>Garantía:</strong> ${data.garantia}</li>
-                                <li><strong>Validez de la oferta:</strong> 15 días calendario</li>
-                                <li>Los precios presentados están expresados en Soles (PEN).</li>
-                            </ul>
-                            
-                            <div style="margin-top: 50px; text-align: center; width: 200px;">
-                                <div style="border-top: 1px solid #000; padding-top: 5px;">
-                                    <strong>Aprobación del Cliente</strong><br>
-                                    <span style="font-size: 9px; color:#666;">Firma y Sello</span>
+                            <div style="text-align: right;">
+                                <div style="font-size: 10px; font-weight: 700; color: #0F6CBD; letter-spacing: 0.1em; text-transform: uppercase;">Propuesta Comercial</div>
+                                <h1 style="color: #0F6CBD; font-size: 32px; font-weight: 800; margin: 5px 0 15px 0; letter-spacing: -0.02em;">COTIZACIÓN</h1>
+                                <div style="background: #F4F7FA; padding: 12px 16px; border-radius: 8px; display: inline-block; text-align: right; border: 1px solid #E2E8F0;">
+                                    <strong style="color: #1E293B; font-size: 14px;">N°: ${data.numero}</strong><br>
+                                    <span style="color: #64748B; font-size: 12px;">Fecha de emisión: ${data.fecha}</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div style="width: 35%;">
-                            <table style="width: 100%; border-collapse: collapse;">
-                                <tr>
-                                    <td style="padding: 8px 10px; text-align: right; border: 1px solid #ddd;"><strong>Subtotal:</strong></td>
-                                    <td style="padding: 8px 10px; text-align: right; border: 1px solid #ddd;">${data.subtotal}</td>
+                        <!-- Datos Cliente -->
+                        <div style="display: flex; border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 40px; overflow: hidden; background: #FFFFFF;">
+                            <div style="width: 50%; padding: 20px; border-right: 1px solid #E2E8F0;">
+                                <div style="font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Información del Cliente</div>
+                                <strong style="display:block; font-size: 16px; color: #0F6CBD; margin-bottom: 10px;">${data.cliente}</strong>
+                                <div style="font-size: 13px; margin-top: 4px; color: #475569;"><strong>RUC:</strong> ${data.ruc}</div>
+                                <div style="font-size: 13px; margin-top: 4px; color: #475569;"><strong>Atención a:</strong> ${data.contacto}</div>
+                                <div style="font-size: 13px; margin-top: 4px; color: #475569;"><strong>Dirección:</strong> ${data.direccion}</div>
+                            </div>
+                            <div style="width: 50%; padding: 20px; background: #F8FAFC;">
+                                <div style="font-size: 10px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Detalles del Requerimiento</div>
+                                <div style="font-size: 13px; margin-top: 4px; color: #475569;"><strong>Asunto:</strong> <span style="font-weight: 500; color: #1E293B;">${data.asunto}</span></div>
+                                <div style="font-size: 13px; margin-top: 4px; color: #475569;"><strong>Equipo:</strong> ${data.equipo}</div>
+                                <div style="font-size: 13px; margin-top: 4px; color: #475569;"><strong>N° Serie:</strong> ${data.serie}</div>
+                            </div>
+                        </div>
+
+                        <!-- Tabla de Cotizacioon -->
+                        <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 40px; border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden;">
+                            <thead>
+                                <tr style="background: #0F6CBD; color: white;">
+                                    <th style="padding: 14px 10px; text-align: center; width: 5%; font-size: 12px; font-weight: 600;">Ítem</th>
+                                    <th style="padding: 14px 10px; text-align: left; width: 50%; font-size: 12px; font-weight: 600;">Descripción del Servicio / Repuesto</th>
+                                    <th style="padding: 14px 10px; text-align: center; width: 10%; font-size: 12px; font-weight: 600;">Cant.</th>
+                                    <th style="padding: 14px 10px; text-align: right; width: 15%; font-size: 12px; font-weight: 600;">P. Unit.</th>
+                                    <th style="padding: 14px 10px; text-align: right; width: 20%; font-size: 12px; font-weight: 600;">Total</th>
                                 </tr>
-                                <tr>
-                                    <td style="padding: 8px 10px; text-align: right; border: 1px solid #ddd;"><strong>I.G.V. (18%):</strong></td>
-                                    <td style="padding: 8px 10px; text-align: right; border: 1px solid #ddd;">${data.igv}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px 10px; text-align: right; background: #0F6CBD; color: white; font-weight: bold; font-size: 14px;"><strong>TOTAL:</strong></td>
-                                    <td style="padding: 12px 10px; text-align: right; background: #0F6CBD; color: white; font-weight: bold; font-size: 14px;">${data.total}</td>
-                                </tr>
-                            </table>
+                            </thead>
+                            <tbody>
+                                ${itemsHTML}
+                            </tbody>
+                        </table>
+
+                        <!-- Totales y Condiciones -->
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="width: 55%; font-size: 12px; color: #475569; line-height: 1.6;">
+                                <strong style="color:#0F6CBD; font-size: 13px;">Términos y Condiciones Comerciales:</strong>
+                                <ul style="padding-left: 20px; margin-top: 8px;">
+                                    <li><strong>Tiempo de entrega:</strong> ${data.entrega}</li>
+                                    <li><strong>Condición de pago:</strong> ${data.pago}</li>
+                                    <li><strong>Garantía:</strong> ${data.garantia}</li>
+                                    <li><strong>Validez de la oferta:</strong> 15 días calendario</li>
+                                    <li>Los precios presentados están expresados en Soles (PEN).</li>
+                                </ul>
+                                
+                                <div style="margin-top: 60px; text-align: center; width: 240px;">
+                                    <div style="border-top: 2px solid #CBD5E1; padding-top: 10px;">
+                                        <strong style="color: #1E293B;">Aprobación del Cliente</strong><br>
+                                        <span style="font-size: 10px; color:#94A3B8;">Firma y Sello (Conformidad)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="width: 40%;">
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px;">
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                                        <tr>
+                                            <td style="padding: 8px 0; color: #64748B;">Subtotal:</td>
+                                            <td style="padding: 8px 0; text-align: right; font-weight: 600; color: #1E293B;">${data.subtotal}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px 0; border-bottom: 2px solid #E2E8F0; color: #64748B;">I.G.V. (18%):</td>
+                                            <td style="padding: 8px 0; border-bottom: 2px solid #E2E8F0; text-align: right; font-weight: 600; color: #1E293B;">${data.igv}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 16px 0 0 0; color: #0F6CBD; font-weight: 800; font-size: 18px;">TOTAL FINAL:</td>
+                                            <td style="padding: 16px 0 0 0; text-align: right; color: #0F6CBD; font-weight: 800; font-size: 18px;">${data.total}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pie de página -->
+                        <div style="position: absolute; bottom: 40px; left: 50px; right: 50px; text-align: center; border-top: 1px solid #E2E8F0; padding-top: 15px; font-size: 10px; color: #94A3B8;">
+                            Este documento es una cotización formal emitida por ZARLOP S.A.C. La aceptación de este documento implica la conformidad con los términos técnicos y económicos descritos.<br>
+                            Generado electrónicamente por el Sistema SGD - www.zarlop.pe
                         </div>
                     </div>
                 </div>
