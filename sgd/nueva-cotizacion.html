@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Cotización | SGD Zarlop</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/sgd.css">
+    
+    <!-- Libraries for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script src="js/auth.js"></script>
+    <style>
+        .form-section { background: var(--sgd-surface); padding: 25px; border-radius: 8px; border: 1px solid var(--sgd-border); margin-bottom: 20px; }
+        .form-section-title { font-size: 1.125rem; font-weight: 600; color: var(--sgd-text); margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--sgd-bg); padding-bottom: 10px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .form-group label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; color: var(--sgd-text); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid var(--sgd-border); border-radius: 6px; font-family: inherit; font-size: 0.875rem; box-sizing: border-box; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--sgd-primary); }
+        
+        /* Items Table */
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .items-table th, .items-table td { padding: 10px; text-align: left; border-bottom: 1px solid var(--sgd-border); font-size: 0.875rem; }
+        .items-table th { background: #f9fafb; font-weight: 600; }
+        .items-table input { width: 100%; padding: 8px; border: 1px solid var(--sgd-border); border-radius: 4px; box-sizing: border-box; }
+        
+        /* Financial Summary Panel */
+        .summary-panel { background: #F8FAFC; border: 1px solid #E2E8F0; padding: 20px; border-radius: 8px; width: 300px; margin-left: auto; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.875rem; }
+        .summary-row.total { font-weight: 700; font-size: 1.125rem; color: var(--sgd-primary); border-top: 1px solid #CBD5E1; padding-top: 10px; margin-top: 10px; }
+        .summary-row.profit { color: var(--sgd-success); font-weight: 600; }
+        
+        .btn-outline { background: transparent; border: 1px solid var(--sgd-primary); color: var(--sgd-primary); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .btn-outline:hover { background: #0F6CBD10; }
+        
+        /* Hidden Template for PDF */
+        #pdfTemplate { display: none; }
+    </style>
+</head>
+<body>
+    <div class="sgd-app">
+        <aside class="sgd-sidebar">
+            <div class="sidebar-header"><img src="../assets/logo.png" alt="Zarlop S.A.C." class="sidebar-logo"></div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Dashboard</a>
+                <a href="correos.html" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Bandeja de Correos</a>
+                <a href="cotizaciones.html" class="menu-item active"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Cotizaciones</a>
+            </nav>
+        </aside>
+
+        <main class="sgd-main">
+            <header class="sgd-topbar">
+                <h2 class="topbar-title">Nueva Cotización Técnica</h2>
+                <div style="margin-left: auto; display: flex; gap: 10px;">
+                    <button class="btn-outline" id="btnSaveDraft">Guardar Borrador</button>
+                    <button class="btn-primary" id="btnGeneratePDF">Generar PDF</button>
+                </div>
+            </header>
+            
+            <div class="sgd-content">
+                <form id="cotizadorForm">
+                    <!-- Datos del Cliente -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Datos del Cliente</h3>
+                        <div class="grid-2">
+                            <div class="form-group"><label>Cliente / Razón Social</label><input type="text" id="c_cliente" placeholder="Ej. Clínica San Pablo" required></div>
+                            <div class="form-group"><label>RUC</label><input type="text" id="c_ruc" placeholder="Ej. 2050..." required></div>
+                            <div class="form-group"><label>Atención a (Contacto)</label><input type="text" id="c_contacto" placeholder="Ing. o Dr. a cargo"></div>
+                            <div class="form-group"><label>Dirección</label><input type="text" id="c_direccion" placeholder="Av. Principal 123"></div>
+                        </div>
+                    </div>
+
+                    <!-- Datos Generales -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Detalles del Servicio / Equipo</h3>
+                        <div class="grid-3">
+                            <div class="form-group"><label>Asunto</label><input type="text" id="c_asunto" placeholder="Mantenimiento Correctivo - Autoclave" required></div>
+                            <div class="form-group"><label>Marca / Modelo</label><input type="text" id="c_equipo" placeholder="Ej. Tuttnauer 2540M"></div>
+                            <div class="form-group"><label>Serie</label><input type="text" id="c_serie" placeholder="S/N"></div>
+                            <div class="form-group"><label>Tiempo de Entrega</label><input type="text" id="c_entrega" value="3 a 5 días hábiles"></div>
+                            <div class="form-group"><label>Garantía</label><input type="text" id="c_garantia" value="6 meses por repuestos"></div>
+                            <div class="form-group"><label>Forma de Pago</label><input type="text" id="c_pago" value="50% adelanto, 50% contraentrega"></div>
+                        </div>
+                    </div>
+
+                    <!-- Detalle Económico (Calculadora) -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Presupuesto Técnico (Dashboard Interno)</h3>
+                        <table class="items-table" id="itemsTable">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Descripción del Repuesto o Servicio</th>
+                                    <th width="10%">Cant.</th>
+                                    <th width="15%" title="Costo real para Zarlop">C. Repuesto (S/)</th>
+                                    <th width="15%" title="Costo hombre por hora/servicio">C. Mano Obra (S/)</th>
+                                    <th width="10%" title="Tu ganancia esperada">Margen (%)</th>
+                                    <th width="15%" title="Precio final unitario que verá el cliente">Precio Venta Un. (S/)</th>
+                                    <th width="5%"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemsBody">
+                                <!-- Filas generadas por JS -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn-outline" id="btnAddItem">+ Añadir Ítem</button>
+                        
+                        <div style="display: flex; justify-content: flex-end; margin-top: 30px;">
+                            <div class="summary-panel">
+                                <h4 style="margin-top:0; border-bottom:1px solid #E2E8F0; padding-bottom:10px;">Resumen Financiero Interno</h4>
+                                <div class="summary-row"><span>Costo Total Repuestos:</span> <span id="sumRepuestos">S/ 0.00</span></div>
+                                <div class="summary-row"><span>Costo Mano de Obra:</span> <span id="sumManoObra">S/ 0.00</span></div>
+                                <div class="summary-row" style="margin-top:10px; padding-top:10px; border-top:1px dashed #CBD5E1;"><span>Costo Base Zarlop:</span> <strong id="sumCostoBase">S/ 0.00</strong></div>
+                                <div class="summary-row profit"><span>Utilidad / Ganancia:</span> <span id="sumGanancia">S/ 0.00</span></div>
+                                
+                                <div class="summary-row" style="margin-top:10px;"><span>Subtotal Venta:</span> <span id="sumSubtotal">S/ 0.00</span></div>
+                                <div class="summary-row"><span>IGV (18%):</span> <span id="sumIgv">S/ 0.00</span></div>
+                                <div class="summary-row total"><span>TOTAL AL CLIENTE:</span> <span id="sumTotal">S/ 0.00</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Contenedor oculto donde se dibuja el PDF antes de exportar -->
+    <div id="pdfContainer" style="position: absolute; left: -9999px; top: 0; background: white; width: 800px; padding: 40px; font-family: 'Arial', sans-serif;">
+        <!-- Se inyectará por JS -->
+    </div>
+
+    <script src="js/cotizador.js"></script>
+</body>
+</html>

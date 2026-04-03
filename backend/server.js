@@ -49,11 +49,13 @@ app.use('/api/', limiter);
 const contactRoutes = require('./routes/contacts');
 const equipmentRoutes = require('./routes/equipment');
 const serviceRoutes = require('./routes/services');
+const sgdAuthRoutes = require('./routes/sgdAuth');
 
 // Use routes
 app.use('/api/contacts', contactRoutes);
 app.use('/api/equipment', equipmentRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/sgd', sgdAuthRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

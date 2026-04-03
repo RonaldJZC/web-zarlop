@@ -1,0 +1,246 @@
+/* ==========================================================================
+   ZARLOP S.A.C. - SGD MODULE STYLES
+   ========================================================================== */
+
+   :root {
+    --sgd-primary: #0F6CBD;
+    --sgd-primary-dark: #0A4A82;
+    --sgd-secondary: #00B4D8;
+    --sgd-bg: #F3F4F6;
+    --sgd-surface: #FFFFFF;
+    --sgd-text: #1F2937;
+    --sgd-text-light: #6B7280;
+    --sgd-border: #E5E7EB;
+    --sgd-error: #EF4444;
+    --sgd-success: #10B981;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--sgd-bg);
+    margin: 0;
+    padding: 0;
+    color: var(--sgd-text);
+}
+
+/* --- LOGIN PAGE --- */
+.login-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0F6CBD10 0%, #00B4D810 100%);
+}
+
+.login-card {
+    background: var(--sgd-surface);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    border-top: 4px solid var(--sgd-primary);
+}
+
+.login-logo {
+    max-width: 180px;
+    margin-bottom: 20px;
+}
+
+.login-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--sgd-text);
+    margin: 0 0 5px 0;
+}
+
+.login-subtitle {
+    font-size: 0.875rem;
+    color: var(--sgd-text-light);
+    margin: 0 0 30px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--sgd-text);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--sgd-border);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--sgd-primary);
+    box-shadow: 0 0 0 3px rgba(15, 108, 189, 0.1);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--sgd-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: var(--sgd-primary-dark);
+}
+
+.error-message {
+    color: var(--sgd-error);
+    font-size: 0.875rem;
+    margin-bottom: 15px;
+    text-align: left;
+    display: none; /* Hidden by default */
+}
+
+/* --- DASHBOARD LAYOUT --- */
+.sgd-app {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sgd-sidebar {
+    width: 250px;
+    background: var(--sgd-surface);
+    border-right: 1px solid var(--sgd-border);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--sgd-border);
+}
+
+.sidebar-logo {
+    max-width: 140px;
+}
+
+.sidebar-menu {
+    flex: 1;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: var(--sgd-text-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    gap: 10px;
+}
+
+.menu-item:hover {
+    background: var(--sgd-bg);
+    color: var(--sgd-primary);
+}
+
+.menu-item.active {
+    background: #0F6CBD10;
+    color: var(--sgd-primary);
+    border-right: 3px solid var(--sgd-primary);
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid var(--sgd-border);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: var(--sgd-text-light);
+}
+
+.btn-logout {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    text-align: center;
+    background: none;
+    border: 1px solid var(--sgd-border);
+    border-radius: 4px;
+    color: var(--sgd-text);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.btn-logout:hover {
+    background: var(--sgd-bg);
+    color: var(--sgd-error);
+    border-color: var(--sgd-error);
+}
+
+.sgd-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sgd-topbar {
+    height: 60px;
+    background: var(--sgd-surface);
+    border-bottom: 1px solid var(--sgd-border);
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.topbar-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.sgd-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.card {
+    background: var(--sgd-surface);
+    border-radius: 8px;
+    border: 1px solid var(--sgd-border);
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}

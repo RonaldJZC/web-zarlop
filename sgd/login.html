@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso SGD | Zarlop S.A.C.</title>
+    <meta name="robots" content="noindex, nofollow"> <!-- Prevent indexing of internal tool -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/sgd.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <img src="../assets/logo.png" alt="Zarlop S.A.C. SGD" class="login-logo">
+            <h1 class="login-title">Servicio de Gestión Documentaria</h1>
+            <p class="login-subtitle">Acceso exclusivo para personal autorizado</p>
+            
+            <div class="error-message" id="errorMsg">Usuario o contraseña incorrectos.</div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username" class="form-label">Usuario</label>
+                    <input type="text" id="username" class="form-control" autocomplete="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" id="password" class="form-control" autocomplete="current-password" required>
+                </div>
+                
+                <button type="submit" class="btn-primary" id="loginBtn">Ingresar al Sistema</button>
+            </form>
+            <div style="margin-top: 20px;">
+                <a href="../index.html" style="font-size: 0.875rem; color: var(--sgd-text-light); text-decoration: none;">&larr; Volver a la web pública</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if already logged in
+        if (localStorage.getItem('sgd_token')) {
+            window.location.href = 'dashboard.html';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const btn = document.getElementById('loginBtn');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            btn.disabled = true;
+            btn.textContent = 'Verificando...';
+            errorMsg.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/sgd/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Save token and redirect
+                    localStorage.setItem('sgd_token', data.token);
+                    localStorage.setItem('sgd_user', JSON.stringify(data.user));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errorMsg.textContent = data.error || 'Error de autenticación';
+                    errorMsg.style.display = 'block';
+                }
+            } catch (error) {
+                errorMsg.textContent = 'Error de conexión con el servidor.';
+                errorMsg.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Ingresar al Sistema';
+            }
+        });
+    </script>
+</body>
+</html>

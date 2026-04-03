@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal | SGD Zarlop</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/sgd.css">
+    <script src="js/auth.js"></script> <!-- Protects the route -->
+</head>
+<body>
+    <div class="sgd-app">
+        <!-- Sidebar -->
+        <aside class="sgd-sidebar">
+            <div class="sidebar-header">
+                <img src="../assets/logo.png" alt="Zarlop S.A.C." class="sidebar-logo">
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item active">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Dashboard
+                </a>
+                <a href="correos.html" class="menu-item">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Bandeja de Correos
+                </a>
+                <a href="cotizaciones.html" class="menu-item">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Cotizaciones
+                </a>
+                <a href="clientes.html" class="menu-item">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    Clientes
+                </a>
+                <a href="configuracion.html" class="menu-item" style="margin-top: auto;">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    Configuración
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <span class="user-name">Cargando...</span>
+                    <span class="user-role">Administrador SGD</span>
+                </div>
+                <button class="btn-logout">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="sgd-main">
+            <header class="sgd-topbar">
+                <h2 class="topbar-title">Dashboard Principal</h2>
+            </header>
+            
+            <div class="sgd-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <!-- Stat Card 1 -->
+                    <div class="card" style="border-top: 4px solid var(--sgd-secondary);">
+                        <h3 style="margin: 0; color: var(--sgd-text-light); font-size: 0.875rem;">Solicitudes Pendientes</h3>
+                        <p style="font-size: 2rem; font-weight: 700; margin: 10px 0 0 0;">3</p>
+                    </div>
+                    <!-- Stat Card 2 -->
+                    <div class="card" style="border-top: 4px solid var(--sgd-primary);">
+                        <h3 style="margin: 0; color: var(--sgd-text-light); font-size: 0.875rem;">Cotizaciones Generadas (Mes)</h3>
+                        <p style="font-size: 2rem; font-weight: 700; margin: 10px 0 0 0;">12</p>
+                    </div>
+                    <!-- Stat Card 3 -->
+                    <div class="card" style="border-top: 4px solid var(--sgd-success);">
+                        <h3 style="margin: 0; color: var(--sgd-text-light); font-size: 0.875rem;">Tasa de Aprobación</h3>
+                        <p style="font-size: 2rem; font-weight: 700; margin: 10px 0 0 0;">85%</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--sgd-border); padding-bottom: 15px; margin-bottom: 15px;">
+                        <h3 style="margin: 0;">Actividad Reciente</h3>
+                        <a href="cotizaciones.html" class="btn-primary" style="width: auto; padding: 8px 16px; font-size: 0.875rem; text-decoration: none;">Crear Nueva Cotización</a>
+                    </div>
+                    <div style="color: var(--sgd-text-light); text-align: center; padding: 40px 0;">
+                        <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1" fill="none" style="opacity: 0.5; margin-bottom: 10px;"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <p>No hay actividad reciente para mostrar en esta versión preliminar.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
