@@ -51,6 +51,74 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* --- LOGIN PAGE (PREMIUM) --- */
+.login-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0B1121 0%, #0F6CBD 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.login-card {
+    background: var(--sgd-bg-surface);
+    padding: 48px;
+    border-radius: var(--sgd-radius-lg);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    border-top: 6px solid var(--sgd-primary);
+    position: relative;
+    z-index: 10;
+}
+
+.login-logo {
+    max-width: 200px;
+    margin-bottom: 24px;
+}
+
+.login-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--sgd-text-main);
+    margin: 0 0 8px 0;
+    letter-spacing: -0.02em;
+}
+
+.login-subtitle {
+    font-size: 0.9rem;
+    color: var(--sgd-text-muted);
+    margin: 0 0 32px 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.error-message {
+    color: var(--sgd-error);
+    background: var(--sgd-error-bg);
+    padding: 10px;
+    border-radius: var(--sgd-radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: left;
+    display: none;
+}
+
 /* --- APP LAYOUT --- */
 .sgd-app {
     display: flex;
