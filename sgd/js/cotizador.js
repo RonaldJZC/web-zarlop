@@ -94,6 +94,238 @@ document.addEventListener('DOMContentLoaded', () => {
     btnAdd.addEventListener('click', createRow);
 
     // ==========================================
+    // MOCK CLIENT DATABASE & AUTOCOMPLETE LOGIC
+    // ==========================================
+    
+    // Inicializar DB en localStorage si no existe
+    if (!localStorage.getItem('sgd_clients_db')) {
+        const initialClients = [
+            { id: 1, ruc: '20100100100', name: 'Clínica San Pablo', address: 'Av. El Polo 789, Surco', contact: 'Dr. Roberto Mendoza', phone: '999888777', email: 'logistica@sanpablo.com.pe' },
+            { id: 2, ruc: '20505050501', name: 'Hospital de Emergencias Casimiro Ulloa', address: 'Av. Roosevelt 6355, Miraflores', contact: 'Ing. Carlos Ruiz', phone: '01 2040900', email: 'compras@hecu.gob.pe' },
+            { id: 3, ruc: '20202020202', name: 'Laboratorio Clínico Roe', address: 'Av. Juan de Aliaga 300, Magdalena', contact: 'Lic. Ana Paredes', phone: '987654321', email: 'aparedes@labroe.com' },
+            { id: 4, ruc: '20404040404', name: 'Centro Radiológico Mediscan', address: 'Calle Los Pinos 145, San Isidro', contact: 'Tech. Luis Silva', phone: '912345678', email: 'lsilva@mediscan.pe' },
+            { id: 5, ruc: '20601234567', name: 'Policlínico Vida y Salud', address: 'Jr. de la Unión 334, Cercado de Lima', contact: 'Dra. María Fernández', phone: '984555123', email: 'admi@vidaysalud.pe' }
+        ];
+        localStorage.setItem('sgd_clients_db', JSON.stringify(initialClients));
+    }
+
+    function getClients() {
+        return JSON.parse(localStorage.getItem('sgd_clients_db')) || [];
+    }
+
+    function saveClient(client) {
+        const clients = getClients();
+        client.id = Date.now();
+        clients.push(client);
+        localStorage.setItem('sgd_clients_db', JSON.stringify(clients));
+        return client;
+    }
+
+    // Campos del DOM Formulario Principal
+    const inputCliente = document.getElementById('c_cliente');
+    const inputRuc = document.getElementById('c_ruc');
+    const inputContacto = document.getElementById('c_contacto');
+    const inputDireccion = document.getElementById('c_direccion');
+    const inputCorreo = document.getElementById('c_correo');
+    const inputTelefono = document.getElementById('c_telefono');
+    const clientDropdown = document.getElementById('clientDropdown');
+
+    // Autocomplete Logic
+    if (inputCliente && clientDropdown) {
+        inputCliente.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            clientDropdown.innerHTML = '';
+            
+            if (query.length < 2) {
+                clientDropdown.style.display = 'none';
+                return;
+            }
+
+            const clients = getClients();
+            const matches = clients.filter(c => 
+                c.name.toLowerCase().includes(query) || 
+                c.ruc.includes(query)
+            );
+
+            if (matches.length > 0) {
+                matches.forEach(client => {
+                    const div = document.createElement('div');
+                    div.className = 'autocomplete-item';
+                    div.innerHTML = `
+                        <div class="autocomplete-title">${client.name}</div>
+                        <div class="autocomplete-sub">RUC: ${client.ruc} | ${client.address}</div>
+                    `;
+                    div.addEventListener('click', () => {
+                        selectClient(client);
+                    });
+                    clientDropdown.appendChild(div);
+                });
+                clientDropdown.style.display = 'block';
+            } else {
+                clientDropdown.innerHTML = `
+                    <div class="autocomplete-empty">Ups, no encontramos clientes con "${query}".</div>
+                    <div class="autocomplete-action" id="dropdownCreateBtn">+ Registrar nuevo cliente</div>
+                `;
+                clientDropdown.style.display = 'block';
+                document.getElementById('dropdownCreateBtn').addEventListener('click', () => {
+                    clientDropdown.style.display = 'none';
+                    openModalCreate(query);
+                });
+            }
+        });
+    }
+
+    // Cerrar dropdown si se hace click fuera
+    document.addEventListener('click', (e) => {
+        if (clientDropdown && !e.target.closest('.sgd-search-container')) {
+            clientDropdown.style.display = 'none';
+        }
+    });
+
+    function selectClient(client) {
+        if (inputCliente) inputCliente.value = client.name;
+        if (inputRuc) inputRuc.value = client.ruc;
+        if (inputContacto) inputContacto.value = client.contact || '';
+        if (inputDireccion) inputDireccion.value = client.address || '';
+        if (inputCorreo) inputCorreo.value = client.email || '';
+        if (inputTelefono) inputTelefono.value = client.phone || '';
+        if (clientDropdown) clientDropdown.style.display = 'none';
+        const clientModal = document.getElementById('clientModal');
+        if (clientModal) clientModal.classList.remove('active');
+    }
+
+    // Modal Logic
+    const btnOpenClientModal = document.getElementById('btnOpenClientModal');
+    const btnCloseClientModal = document.getElementById('btnCloseClientModal');
+    const clientModal = document.getElementById('clientModal');
+    
+    // Elements in Modal Search State
+    const modalSearchState = document.getElementById('modalSearchState');
+    const modalSearchInput = document.getElementById('modalSearchInput');
+    const modalClientsList = document.getElementById('modalClientsList');
+    const btnShowCreateClient = document.getElementById('btnShowCreateClient');
+
+    // Elements in Modal Create State
+    const modalCreateState = document.getElementById('modalCreateState');
+    const btnCancelCreateClient = document.getElementById('btnCancelCreateClient');
+    const newClientForm = document.getElementById('newClientForm');
+
+    function renderModalList(filter = '') {
+        if (!modalClientsList) return;
+        modalClientsList.innerHTML = '';
+        const clients = getClients();
+        const matches = clients.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()) || c.ruc.includes(filter));
+        
+        if (matches.length === 0) {
+            modalClientsList.innerHTML = '<div style="padding:15px; text-align:center; color:#64748b;">No hay resultados.</div>';
+            return;
+        }
+
+        matches.forEach(client => {
+            const div = document.createElement('div');
+            div.className = 'modal-list-item';
+            div.innerHTML = `
+                <strong style="color:var(--sgd-text-main);">${client.name}</strong><br>
+                <span style="font-size:0.8rem; color:#64748b;">RUC: ${client.ruc}</span>
+            `;
+            div.addEventListener('click', () => selectClient(client));
+            modalClientsList.appendChild(div);
+        });
+    }
+
+    if (btnOpenClientModal) {
+        btnOpenClientModal.addEventListener('click', () => {
+            modalSearchState.style.display = 'block';
+            modalCreateState.style.display = 'none';
+            modalSearchInput.value = '';
+            renderModalList();
+            clientModal.classList.add('active');
+            setTimeout(() => modalSearchInput.focus(), 100);
+        });
+    }
+
+    if (btnCloseClientModal) {
+        btnCloseClientModal.addEventListener('click', () => {
+            clientModal.classList.remove('active');
+        });
+    }
+
+    if (modalSearchInput) {
+        modalSearchInput.addEventListener('input', (e) => {
+            renderModalList(e.target.value);
+        });
+    }
+
+    if (btnShowCreateClient) btnShowCreateClient.addEventListener('click', () => openModalCreate());
+
+    function openModalCreate(searchVal = '') {
+        if (clientModal) clientModal.classList.add('active');
+        if (modalSearchState) modalSearchState.style.display = 'none';
+        if (modalCreateState) modalCreateState.style.display = 'block';
+        if (newClientForm) newClientForm.reset();
+        
+        const successMsg = document.getElementById('createSuccessMsg');
+        if (successMsg) successMsg.style.display = 'none';
+
+        const submitBtn = document.getElementById('btnGuardarDir');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Guardar cliente en directorio';
+        }
+        
+        // Si viene del campo de búsqueda y parece un RUC
+        if (searchVal.match(/^[0-9]+$/)) {
+            const rucField = document.getElementById('new_c_ruc');
+            if (rucField) rucField.value = searchVal;
+        } else {
+            const nameField = document.getElementById('new_c_name');
+            if (nameField) nameField.value = searchVal;
+        }
+    }
+
+    if (btnCancelCreateClient) {
+        btnCancelCreateClient.addEventListener('click', () => {
+            modalCreateState.style.display = 'none';
+            modalSearchState.style.display = 'block';
+        });
+    }
+
+    if (newClientForm) {
+        newClientForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('btnGuardarDir');
+            const successMsg = document.getElementById('createSuccessMsg');
+            
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Guardando...';
+            }
+            
+            const newClient = {
+                ruc: document.getElementById('new_c_ruc').value,
+                name: document.getElementById('new_c_name').value,
+                address: document.getElementById('new_c_address').value,
+                contact: document.getElementById('new_c_contact').value,
+                phone: document.getElementById('new_c_phone').value,
+                email: document.getElementById('new_c_email').value
+            };
+            
+            const saved = saveClient(newClient);
+            
+            // Show success message briefly before closing
+            if (successMsg) {
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    selectClient(saved);
+                }, 1200);
+            } else {
+                selectClient(saved);
+            }
+        });
+    }
+
+    // ==========================================
     // GENERACIÓN DE PDF CORPORATIVO (html2canvas + jsPDF)
     // ==========================================
     btnGeneratePDF.addEventListener('click', async (e) => {
@@ -298,5 +530,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     });
+
+    // ==========================================
+    // AUTOCOMPLETADO DESDE EXPEDIENTE (INTEGRACIÓN ERP)
+    // ==========================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const expId = urlParams.get('expediente');
+    if (expId) {
+        const correos = JSON.parse(localStorage.getItem('sgd_correos_db')) || [];
+        const correoInfo = correos.find(c => c.id == expId);
+        if (correoInfo) {
+            // Intento de machar entidad con DB cliente para traer RUC y direccion
+            const clients = getClients();
+            const ai = correoInfo.ai_analysis || {};
+            
+            const targetName = ai.entidad || correoInfo.senderName;
+            let matchedClient = clients.find(c => c.name.toLowerCase().includes(targetName.toLowerCase()));
+            
+            if (matchedClient) {
+                selectClient(matchedClient);
+            } else {
+                if (inputCliente) inputCliente.value = targetName;
+                if (inputCorreo) inputCorreo.value = correoInfo.senderEmail;
+                if (inputContacto) inputContacto.value = correoInfo.senderName;
+            }
+
+            // Fill technical fields
+            const inputAsunto = document.getElementById('c_asunto');
+            const inputEquipo = document.getElementById('c_equipo');
+            const inputEntrega = document.getElementById('c_entrega');
+            const inputGarantia = document.getElementById('c_garantia');
+            const inputPago = document.getElementById('c_pago');
+
+            if (inputAsunto && ai.objeto) inputAsunto.value = ai.objeto;
+            if (inputEquipo && ai.equipos) inputEquipo.value = ai.equipos;
+            if (inputEntrega && ai.plazo) inputEntrega.value = ai.plazo;
+            if (inputGarantia && ai.garantia) inputGarantia.value = ai.garantia;
+            if (inputPago && ai.pago) inputPago.value = ai.pago;
+
+            // Fill first row items if available
+            if (ai.objeto && tbody) {
+                const firstRow = tbody.querySelector('tr');
+                if (firstRow) {
+                    firstRow.querySelector('.desc').value = `Servicio: ${ai.objeto} - Equipos: ${ai.equipos}`;
+                }
+            }
+        }
+    }
 
 });

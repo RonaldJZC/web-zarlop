@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración | SGD Zarlop</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/sgd.css">
+    <script src="js/auth.js"></script>
+    <style>
+        .config-block { background: var(--sgd-surface); padding: 25px; border-radius: var(--sgd-radius-md); border: 1px solid var(--sgd-border); margin-bottom: 25px; }
+        .config-title { font-size: 1.1rem; font-weight: 700; color: var(--sgd-text-main); margin-top: 0; margin-bottom: 5px; }
+        .config-desc { font-size: 0.85rem; color: var(--sgd-text-muted); margin-bottom: 20px; }
+        .config-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    </style>
+</head>
+<body>
+    <div class="sgd-app">
+        <!-- SIDEBAR -->
+        <aside class="sgd-sidebar">
+            <div class="sidebar-header"><img src="../assets/logo.png" alt="Zarlop S.A.C." class="sidebar-logo"></div>
+                        <nav class="sidebar-menu">
+                <div class="menu-label">Principal</div>
+                <a href="dashboard.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Dashboard</a>
+                <a href="correos.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Bandeja de Correos</a>
+                
+                <div class="menu-label">Comercial</div>
+                <a href="cotizaciones.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Cotizaciones</a>
+                <a href="clientes.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg> Directorio de Clientes</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Ventas</a>
+
+                <div class="menu-label">Operaciones e Inventario</div>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zm8-2v14"></path></svg> Inventario Inicial</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg> Productos</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg> Compras</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg> BD Compras</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg> BD Ventas</a>
+
+                <div class="menu-label">Contabilidad</div>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Gastos / Movilidad</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Ganancias</a>
+
+                <div class="menu-label">Administración</div>
+                <a href="configuracion.html" class="menu-item" class="menu-item active"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Configuración del Sistema</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <span class="user-name" id="displayUsername">Administrador</span>
+                    <span class="user-role">Zarlop S.A.C.</span>
+                </div>
+                <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="sgd-main">
+            <header class="sgd-topbar">
+                <h2 class="topbar-title">Configuración Institucional</h2>
+                <div style="margin-left: auto;">
+                    <button class="btn-primary" style="padding: 10px 20px;">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </header>
+            
+            <div class="sgd-content">
+                
+                <!-- Empresa -->
+                <div class="config-block">
+                    <h3 class="config-title">Datos Fiscales de la Empresa</h3>
+                    <p class="config-desc">Información formal que aparecerá en los encabezados de las cotizaciones emitidas.</p>
+                    <div class="config-form">
+                        <div class="form-group"><label>Razón Social Oficial</label><input type="text" value="ZARLOP S.A.C."></div>
+                        <div class="form-group"><label>RUC de Facturación</label><input type="text" value="20602591868"></div>
+                        <div class="form-group"><label>Lema o Descripción (Subtítulo)</label><input type="text" value="Soluciones Electrónicas y Biomédicas"></div>
+                        <div class="form-group"><label>Dirección Fiscal</label><input type="text" value="Lima, Perú"></div>
+                        <div class="form-group"><label>Teléfono Corporativo</label><input type="text" value="(+51) 949 035 072"></div>
+                        <div class="form-group"><label>Correo de Contacto</label><input type="text" value="contacto@zarlop.pe"></div>
+                    </div>
+                </div>
+
+                <!-- Parámetros PDF -->
+                <div class="config-block">
+                    <h3 class="config-title">Comportamiento del Cotizador PDF</h3>
+                    <p class="config-desc">Configuración interna financiera y firma oficial de los documentos PDF.</p>
+                    <div class="config-form">
+                        <div class="form-group"><label>Margen de Utilidad por Defecto (%)</label><input type="number" value="30" title="Utilidad que usa el cotizador internamente al crear una fila nueva."></div>
+                        <div class="form-group"><label>Prefijo/Serie de Cotización (Ej: COT-2026)</label><input type="text" value="COT-2026-"></div>
+                        <div class="form-group"><label>Validez de Cotización (Días)</label><input type="number" value="15"></div>
+                        <div class="form-group"><label>Nombre del Responsable Comercial (Pie de firma)</label><input type="text" value="Ing. Zarlop"></div>
+                    </div>
+                </div>
+
+                <!-- Avanzado -->
+                <div class="config-block">
+                    <h3 class="config-title">Módulo de Correo Remoto (Avanzado)</h3>
+                    <p class="config-desc">Estas configuraciones requieren llaves de la API de Google/Gmail para conectar la bandeja.</p>
+                    <div class="config-form">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Google Cloud Workspace API Key (En Desarrollo)</label>
+                            <input type="password" value="****************************************" disabled style="background: #e2e8f0; cursor: not-allowed;">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        function logout() {
+            localStorage.removeItem('sgd_token');
+            localStorage.removeItem('sgd_user');
+            window.location.href = 'login.html';
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = localStorage.getItem('sgd_user');
+            if(userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    document.getElementById('displayUsername').textContent = user.username || 'Admin';
+                } catch(e) {}
+            }
+        });
+    </script>
+</body>
+</html>

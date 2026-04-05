@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 // Credenciales Hardcodeadas (MVP)
 // TODO: En Fase 2 conectar a base de datos.
 const ADMIN_USER = process.env.SGD_ADMIN_USER || 'admin';
-const ADMIN_PASS = process.env.SGD_ADMIN_PASS || 'zarlop2026';
+const ADMIN_PASS = process.env.SGD_ADMIN_PASS || 'admin123';
 const JWT_SECRET = process.env.JWT_SECRET || 'ZARLOP_SGD_S3CR3T_KEY_2026_COMPLEX';
 
 // Route: POST /api/sgd/login

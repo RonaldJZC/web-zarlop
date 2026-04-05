@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expediente de Correo | SGD Zarlop</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/sgd.css">
+    
+    <style>
+        .tabs-header {
+            display: flex; gap: 10px; border-bottom: 2px solid var(--sgd-border); margin-bottom: 20px;
+        }
+        .tab-btn {
+            background: none; border: none; padding: 12px 20px; font-size: 0.95rem; font-weight: 600;
+            color: var(--sgd-text-light); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover { color: var(--sgd-primary); }
+        .tab-btn.active { color: var(--sgd-primary); border-bottom-color: var(--sgd-primary); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .expediente-main-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .ai-panel {
+            background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px; height: 100%;
+        }
+        .ai-field { margin-bottom: 15px; }
+        .ai-field label { display:block; font-size: 0.75rem; text-transform: uppercase; color: #64748B; font-weight:700; margin-bottom:4px; }
+        .ai-field .val { font-size: 0.9rem; color: #1E293B; }
+        .ai-loader { display: none; text-align: center; padding: 40px 0; }
+        .spinner { border: 3px solid #E2E8F0; border-top: 3px solid var(--sgd-primary); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .file-card {
+            border: 1px solid var(--sgd-border); border-radius: 8px; padding: 15px; display: flex; align-items: center; gap: 15px; background: white;
+            transition: transform 0.2s;
+        }
+        .file-card:hover { transform: translateY(-2px); box-shadow: var(--sgd-shadow-md); }
+        .file-icon { width: 40px; height: 40px; border-radius: 8px; display:flex; align-items:center; justify-content:center; }
+        .file-icon.pdf { background: #FEE2E2; color: #EF4444; }
+        .file-icon.word { background: #DBEAFE; color: #3B82F6; }
+        
+        .anexo-item {
+            display: flex; align-items: center; justify-content: space-between; padding: 12px; border: 1px solid var(--sgd-border); border-radius: 6px; margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sgd-app">
+        <!-- Sidebar -->
+        <aside class="sgd-sidebar">
+            <div class="sidebar-header">
+                <img src="../assets/logo.png" alt="Zarlop S.A.C." class="sidebar-logo">
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-label">Principal</div>
+                <a href="dashboard.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Dashboard</a>
+                <a href="correos.html" class="menu-item active" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Bandeja de Correos</a>
+                
+                <div class="menu-label">Comercial</div>
+                <a href="cotizaciones.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Cotizaciones</a>
+                <a href="clientes.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg> Directorio de Clientes</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Ventas</a>
+
+                <div class="menu-label">Operaciones e Inventario</div>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zm8-2v14"></path></svg> Inventario Inicial</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg> Productos</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg> Compras</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg> BD Compras</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg> BD Ventas</a>
+
+                <div class="menu-label">Contabilidad</div>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Gastos / Movilidad</a>
+                <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Ganancias</a>
+
+                <div class="menu-label">Administración</div>
+                <a href="configuracion.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Configuración del Sistema</a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <span class="user-name">Administrador</span>
+                    <span class="user-role">SGD</span>
+                </div>
+                <!-- Auth is globally handled but logout shouldn't break -->
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="sgd-main" style="position: relative; padding-bottom: 80px;">
+            <header class="sgd-topbar" style="justify-content: flex-start; gap: 15px;">
+                <a href="correos.html" style="color: var(--sgd-text-light);"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg></a>
+                <h2 class="topbar-title">Expediente de Solicitud</h2>
+            </header>
+            
+            <div class="sgd-content">
+                <div class="expediente-main-header">
+                    <div>
+                        <h1 id="ex_subject" style="margin:0 0 5px; font-size:1.6rem; color:var(--sgd-text-main);">Cargando Expediente...</h1>
+                        <div style="font-size: 0.9rem; color: var(--sgd-text-light);">
+                            De: <strong id="ex_sender_name" style="color:#1E293B;">...</strong> &lt;<span id="ex_sender_email">...</span>&gt; | Recibido: <span id="ex_date">...</span>
+                        </div>
+                    </div>
+                    <div id="ex_status_badge">
+                        <!-- badge -->
+                    </div>
+                </div>
+
+                <!-- TABS -->
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="switchTab('resumen')">Resumen y Correo</button>
+                    <button class="tab-btn" onclick="switchTab('adjuntos')">Archivos Adjuntos</button>
+                    <button class="tab-btn" onclick="switchTab('anexos')">Anexos por Llenar (<span id="anexos_count">0</span>)</button>
+                    <button class="tab-btn" onclick="switchTab('notas')">Notas Internas</button>
+                </div>
+
+                <!-- TAB CONTENT -->
+                <div id="tab-resumen" class="tab-content active">
+                    <div class="grid-2">
+                        <!-- CUERPO DEL CORREO -->
+                        <div class="card" style="height: 100%;">
+                            <h3 style="font-size: 0.9rem; text-transform: uppercase; color: var(--sgd-text-light); margin-top:0;">Mensaje Original</h3>
+                            <pre id="ex_body" style="font-family: inherit; font-size: 0.9rem; white-space: pre-wrap; color: var(--sgd-text-main); margin:0;">
+                                Cargando cuerpo del mensaje...
+                            </pre>
+                        </div>
+                        
+                        <!-- ANÁLISIS DE LA IA -->
+                        <div class="ai-panel">
+                            <h3 style="font-size: 0.9rem; text-transform: uppercase; color: var(--sgd-primary); margin-top:0; display:flex; align-items:center; gap:8px;">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                Resumen Estructurado (Automático)
+                            </h3>
+                            
+                            <div id="ai_unprocessed" style="text-align:center; padding: 30px 0;">
+                                <p style="font-size: 0.9rem; color: #64748B; margin-bottom: 15px;">Este correo aún no ha sido procesado por el sistema para extraer información comercial.</p>
+                                <button class="btn-primary" onclick="simulateAIAnalysis()">Analizar Solicitud Mágicamente</button>
+                            </div>
+
+                            <div id="ai_loader" class="ai-loader">
+                                <div class="spinner"></div>
+                                <p style="font-size: 0.85rem; color: #64748B;">Leyendo adjuntos y extrayendo parámetros técnicos...</p>
+                            </div>
+
+                            <div id="ai_results" style="display: none;">
+                                <div class="ai-field"><label>Entidad Solicitante</label><div class="val" id="ai_entidad">-</div></div>
+                                <div class="ai-field"><label>Objeto / Servicio</label><div class="val" id="ai_objeto">-</div></div>
+                                <div class="ai-field"><label>Equipos Referidos</label><div class="val" id="ai_equipos">-</div></div>
+                                <div class="grid-2" style="margin-top:0; gap:10px;">
+                                    <div class="ai-field"><label>Plazo Esperado</label><div class="val" id="ai_plazo">-</div></div>
+                                    <div class="ai-field"><label>Garantía Mínima</label><div class="val" id="ai_garantia">-</div></div>
+                                </div>
+                                <div class="grid-2" style="margin-top:0; gap:10px;">
+                                    <div class="ai-field"><label>Condición de Pago</label><div class="val" id="ai_pago">-</div></div>
+                                    <div class="ai-field"><label>Penalidades</label><div class="val" style="color:var(--sgd-error);" id="ai_penalidad">-</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-adjuntos" class="tab-content">
+                    <div class="card">
+                        <h3 style="margin-top:0;">Archivos Extraídos del Correo</h3>
+                        <div class="grid-3" id="adjuntos_grid">
+                            <!-- JS Fills this -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-anexos" class="tab-content">
+                    <div class="card">
+                        <h3 style="margin-top:0;">Declaraciones y Anexos a Llenar</h3>
+                        <p style="font-size:0.9rem; color:var(--sgd-text-light);">El visor detectó adjuntos editables (.docx, .doc) que usualmente representan formatos del cliente (TDRs, Declaraciones Juradas, Anexos técnicos) que el área comercial debe llenar y firmar antes de ofertar.</p>
+                        
+                        <div id="anexos_list" style="margin-top: 20px;">
+                            <!-- JS Fills this -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-notas" class="tab-content">
+                    <div class="card">
+                        <h3 style="margin-top:0;">Bitácora del Vendedor</h3>
+                        <textarea style="width:100%; height:200px; padding:15px; border:1px solid var(--sgd-border); border-radius:8px; font-family:inherit; resize:vertical; background:#F8FAFC;" placeholder="Escribe observaciones operativas sobre este cliente o esta oferta..."></textarea>
+                        <div style="text-align: right; margin-top: 10px;">
+                            <button class="btn-outline">Guardar Nota</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Fixed Bottom Action Bar -->
+            <div style="position: fixed; bottom: 0; left: 260px; right: 0; background: white; border-top: 1px solid var(--sgd-border); padding: 15px 32px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="font-size: 0.85rem; color: var(--sgd-text-light);">
+                    El análisis de expediente asiste al llenado automático de la cotización.
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <button class="btn-outline">Archivar Expediente</button>
+                    <button class="btn-primary" id="btnCrearCotizacion" style="padding: 10px 24px; font-size: 1rem;">Generar Cotización Zarlop &rarr;</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/expediente.js"></script>
+</body>
+</html>
