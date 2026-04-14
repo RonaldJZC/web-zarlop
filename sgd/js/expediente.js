@@ -48,7 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (activeCorreo.adjuntos && activeCorreo.adjuntos.length > 0) {
         activeCorreo.adjuntos.forEach(a => {
             const isPdf = a.type === 'pdf';
-            const icon = isPdf ? '📄' : '📝';
+            const isExcel = a.type === 'excel';
+            const icon = isPdf ? '📄' : (isExcel ? '📊' : '📝');
             const colorClass = isPdf ? 'pdf' : 'word';
             adjContainer.innerHTML += `
                 <div class="file-card">
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div style="font-size: 0.85rem; font-weight:600; text-overflow: ellipsis; white-space: nowrap; overflow:hidden;" title="${a.name}">${a.name}</div>
                         <div style="font-size: 0.7rem; color: #64748B; text-transform:uppercase;">Documento ${a.type}</div>
                     </div>
-                    <a href="#" style="text-decoration:none;" title="Descargar">⬇️</a>
+                    <a href="${a.url || '#'}" target="_blank" style="text-decoration:none;" title="Descargar">⬇️</a>
                 </div>
             `;
         });
@@ -86,34 +87,59 @@ document.addEventListener('DOMContentLoaded', () => {
         anxContainer.innerHTML = '<div style="color: #64748b;">No se detectaron formatos editables para llenar.</div>';
     }
 
-    // IA PRELOAD CHECK
-    if (activeCorreo.status === 'cotizado' || activeCorreo.ai_analysis) {
-        // If it was already analyzed in a previous session, show results immediately
-        if (sessionStorage.getItem(`ai_analyzed_${exId}`)) {
-            showAIResults(activeCorreo.ai_analysis);
-        }
+    // Check if already analyzed (from previous visit)
+    if (activeCorreo.ai_analysis) {
+        showAIResults(activeCorreo.ai_analysis);
     }
 
     // Generar Cotización Redirección
     document.getElementById('btnCrearCotizacion').addEventListener('click', () => {
-        // Si hay IA y NO ha sido disparada visualmente, forzamos? No, dejamos que se transfiera
         window.location.href = `nueva-cotizacion.html?expediente=${activeCorreo.id}`;
     });
 });
 
-function simulateAIAnalysis() {
-    if (!activeCorreo || !activeCorreo.ai_analysis) {
-        alert("Este correo no tiene información técnica que el sistema pueda extraer en la demo actual.");
-        return;
-    }
+// ===== REAL ANALYSIS - CALLS BACKEND API =====
+async function runAnalysis() {
+    if (!activeCorreo) return;
 
+    // Show loader
     document.getElementById('ai_unprocessed').style.display = 'none';
     document.getElementById('ai_loader').style.display = 'block';
 
-    setTimeout(() => {
-        sessionStorage.setItem(`ai_analyzed_${activeCorreo.id}`, "true");
-        showAIResults(activeCorreo.ai_analysis);
-    }, 2000);
+    try {
+        const res = await fetch(`/api/mail/analyze/${activeCorreo.id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await res.json();
+
+        if (data.success && data.analysis) {
+            // Save analysis to local correo object for future visits
+            activeCorreo.ai_analysis = data.analysis;
+            const correos = JSON.parse(localStorage.getItem('sgd_correos_db')) || [];
+            const idx = correos.findIndex(c => c.id === activeCorreo.id);
+            if (idx !== -1) {
+                correos[idx].ai_analysis = data.analysis;
+                correos[idx].status = 'analizado';
+                localStorage.setItem('sgd_correos_db', JSON.stringify(correos));
+            }
+
+            // Small delay for visual effect
+            setTimeout(() => {
+                showAIResults(data.analysis);
+            }, 800);
+        } else {
+            document.getElementById('ai_loader').style.display = 'none';
+            document.getElementById('ai_unprocessed').style.display = 'block';
+            alert('Error al analizar: ' + (data.error || 'No se pudo procesar'));
+        }
+    } catch (err) {
+        console.error('Analysis error:', err);
+        document.getElementById('ai_loader').style.display = 'none';
+        document.getElementById('ai_unprocessed').style.display = 'block';
+        alert('Error de red al conectar con el servidor.');
+    }
 }
 
 function showAIResults(data) {
@@ -122,11 +148,22 @@ function showAIResults(data) {
     document.getElementById('ai_unprocessed').style.display = 'none';
     document.getElementById('ai_results').style.display = 'block';
 
+    document.getElementById('ai_tipo').textContent = data.tipoSolicitud || '-';
     document.getElementById('ai_entidad').textContent = data.entidad || '-';
     document.getElementById('ai_objeto').textContent = data.objeto || '-';
     document.getElementById('ai_equipos').textContent = data.equipos || '-';
+    document.getElementById('ai_cantidad').textContent = data.cantidad || '-';
+    document.getElementById('ai_caracteristicas').textContent = data.caracteristicas || '-';
     document.getElementById('ai_plazo').textContent = data.plazo || '-';
     document.getElementById('ai_garantia').textContent = data.garantia || '-';
     document.getElementById('ai_pago').textContent = data.pago || '-';
     document.getElementById('ai_penalidad').textContent = data.penalidad || '-';
+    document.getElementById('ai_lugarEntrega').textContent = data.lugarEntrega || '-';
+    document.getElementById('ai_contacto').textContent = data.contacto || '-';
+    document.getElementById('ai_resumen').textContent = data.resumen || '-';
+    document.getElementById('ai_fuente').textContent = data.fuenteDatos ? `📄 ${data.fuenteDatos}` : '';
+
+    // Update badge to analyzed
+    document.getElementById('ex_status_badge').innerHTML = 
+        '<span class="status-badge" style="background:#D1FAE5; color:#065F46; padding: 6px 12px;">✓ Analizado</span>';
 }

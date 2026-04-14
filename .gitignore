@@ -31,3 +31,8 @@ build/
 *.old
 *.bak
 .gemini/
+
+# Configuración y base de datos local (Protección de credenciales)
+backend/config/mailConfig.json
+backend/database/mailDb.json
+

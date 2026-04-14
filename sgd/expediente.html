@@ -143,26 +143,42 @@
                             
                             <div id="ai_unprocessed" style="text-align:center; padding: 30px 0;">
                                 <p style="font-size: 0.9rem; color: #64748B; margin-bottom: 15px;">Este correo aún no ha sido procesado por el sistema para extraer información comercial.</p>
-                                <button class="btn-primary" onclick="simulateAIAnalysis()">Analizar Solicitud Mágicamente</button>
+                                <button class="btn-primary" onclick="runAnalysis()">Analizar Solicitud Mágicamente</button>
                             </div>
 
                             <div id="ai_loader" class="ai-loader">
                                 <div class="spinner"></div>
-                                <p style="font-size: 0.85rem; color: #64748B;">Leyendo adjuntos y extrayendo parámetros técnicos...</p>
+                                <p style="font-size: 0.85rem; color: #64748B;">Analizando contenido del correo y adjuntos...</p>
                             </div>
 
                             <div id="ai_results" style="display: none;">
+                                <div class="ai-field" style="margin-bottom:12px; padding:10px; background:#EFF6FF; border-radius:8px; border:1px solid #BFDBFE;">
+                                    <label style="color:#1E40AF;">Tipo de Solicitud</label>
+                                    <div class="val" id="ai_tipo" style="font-size:1rem; font-weight:700; color:#1E40AF;">-</div>
+                                </div>
                                 <div class="ai-field"><label>Entidad Solicitante</label><div class="val" id="ai_entidad">-</div></div>
-                                <div class="ai-field"><label>Objeto / Servicio</label><div class="val" id="ai_objeto">-</div></div>
-                                <div class="ai-field"><label>Equipos Referidos</label><div class="val" id="ai_equipos">-</div></div>
+                                <div class="ai-field"><label>Objeto / Servicio</label><div class="val" id="ai_objeto" style="font-size:0.85rem;">-</div></div>
+                                <div class="ai-field"><label>Equipos / Productos Referidos</label><div class="val" id="ai_equipos">-</div></div>
+                                <div class="ai-field"><label>Cantidad</label><div class="val" id="ai_cantidad">-</div></div>
+                                <div class="ai-field" style="background:#F8FAFC; padding:10px; border-radius:6px; border:1px solid #E2E8F0;">
+                                    <label>Características Técnicas del Bien</label>
+                                    <div class="val" id="ai_caracteristicas" style="font-size:0.82rem; color:#334155; white-space:pre-wrap; max-height:200px; overflow-y:auto;">-</div>
+                                </div>
                                 <div class="grid-2" style="margin-top:0; gap:10px;">
-                                    <div class="ai-field"><label>Plazo Esperado</label><div class="val" id="ai_plazo">-</div></div>
+                                    <div class="ai-field"><label>Plazo de Entrega</label><div class="val" id="ai_plazo" style="color:#B45309; font-weight:600;">-</div></div>
                                     <div class="ai-field"><label>Garantía Mínima</label><div class="val" id="ai_garantia">-</div></div>
                                 </div>
                                 <div class="grid-2" style="margin-top:0; gap:10px;">
                                     <div class="ai-field"><label>Condición de Pago</label><div class="val" id="ai_pago">-</div></div>
                                     <div class="ai-field"><label>Penalidades</label><div class="val" style="color:var(--sgd-error);" id="ai_penalidad">-</div></div>
                                 </div>
+                                <div class="ai-field"><label>Lugar de Entrega</label><div class="val" id="ai_lugarEntrega" style="font-size:0.85rem;">-</div></div>
+                                <div class="ai-field"><label>Contacto</label><div class="val" id="ai_contacto" style="font-size:0.85rem;">-</div></div>
+                                <div class="ai-field" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #E2E8F0;">
+                                    <label>Resumen</label>
+                                    <div class="val" id="ai_resumen" style="font-size:0.85rem; color:#475569;">-</div>
+                                </div>
+                                <div id="ai_fuente" style="margin-top:10px; font-size:0.75rem; color:#94A3B8; text-align:right;">-</div>
                             </div>
                         </div>
                     </div>
@@ -214,5 +230,6 @@
     </div>
 
     <script src="js/expediente.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>

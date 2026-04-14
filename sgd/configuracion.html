@@ -15,6 +15,36 @@
         .config-title { font-size: 1.1rem; font-weight: 700; color: var(--sgd-text-main); margin-top: 0; margin-bottom: 5px; }
         .config-desc { font-size: 0.85rem; color: var(--sgd-text-muted); margin-bottom: 20px; }
         .config-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        /* Account cards */
+        .account-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; margin-bottom: 15px; position: relative; }
+        .account-card.disabled { opacity: 0.5; }
+        .account-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .account-name { font-weight: 600; font-size: 1rem; color: #1e293b; }
+        .account-badge { font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 500; }
+        .account-badge.active { background: #d1fae5; color: #065f46; }
+        .account-badge.inactive { background: #fee2e2; color: #991b1b; }
+        .account-actions { display: flex; gap: 8px; }
+        .btn-icon { background: none; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+        .btn-icon:hover { background: #f1f5f9; }
+        .btn-icon.danger:hover { background: #fee2e2; border-color: #fca5a5; color: #dc2626; }
+        .btn-add-account { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .btn-add-account:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59,130,246,0.35); }
+        
+        /* Keywords */
+        .keywords-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .keyword-tag { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #dbeafe, #eff6ff); color: #1e40af; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; border: 1px solid #bfdbfe; }
+        .keyword-tag .remove-kw { cursor: pointer; font-weight: 700; color: #93c5fd; transition: color 0.2s; font-size: 1rem; line-height: 1; }
+        .keyword-tag .remove-kw:hover { color: #dc2626; }
+        
+        /* Blacklist */
+        .blacklist-tag { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #fee2e2, #fef2f2); color: #991b1b; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; border: 1px solid #fecaca; }
+        .blacklist-tag .remove-kw { cursor: pointer; font-weight: 700; color: #fca5a5; transition: color 0.2s; font-size: 1rem; line-height: 1; }
+        .blacklist-tag .remove-kw:hover { color: #dc2626; }
+
+        .keyword-input-row { display: flex; gap: 10px; }
+        .keyword-input-row input { flex: 1; }
+        .keyword-input-row button { white-space: nowrap; }
     </style>
 </head>
 <body>
@@ -22,29 +52,25 @@
         <!-- SIDEBAR -->
         <aside class="sgd-sidebar">
             <div class="sidebar-header"><img src="../assets/logo.png" alt="Zarlop S.A.C." class="sidebar-logo"></div>
-                        <nav class="sidebar-menu">
+            <nav class="sidebar-menu">
                 <div class="menu-label">Principal</div>
-                <a href="dashboard.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Dashboard</a>
-                <a href="correos.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Bandeja de Correos</a>
-                
+                <a href="dashboard.html" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Dashboard</a>
+                <a href="correos.html" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Bandeja de Correos</a>
                 <div class="menu-label">Comercial</div>
-                <a href="cotizaciones.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Cotizaciones</a>
-                <a href="clientes.html" class="menu-item" ><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg> Directorio de Clientes</a>
+                <a href="cotizaciones.html" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Cotizaciones</a>
+                <a href="clientes.html" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg> Directorio de Clientes</a>
                 <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Ventas</a>
-
                 <div class="menu-label">Operaciones e Inventario</div>
                 <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zm8-2v14"></path></svg> Inventario Inicial</a>
                 <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg> Productos</a>
                 <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg> Compras</a>
                 <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg> BD Compras</a>
                 <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg> BD Ventas</a>
-
                 <div class="menu-label">Contabilidad</div>
                 <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg> Gastos / Movilidad</a>
                 <a href="#" class="menu-item"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Ganancias</a>
-
                 <div class="menu-label">Administración</div>
-                <a href="configuracion.html" class="menu-item" class="menu-item active"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Configuración del Sistema</a>
+                <a href="configuracion.html" class="menu-item active"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Configuración del Sistema</a>
             </nav>
             <div class="sidebar-footer">
                 <div class="user-info">
@@ -59,9 +85,10 @@
         <main class="sgd-main">
             <header class="sgd-topbar">
                 <h2 class="topbar-title">Configuración Institucional</h2>
-                <div style="margin-left: auto;">
-                    <button class="btn-primary" style="padding: 10px 20px;">
-                        Guardar Cambios
+                <div style="margin-left: auto; display: flex; align-items: center; gap: 10px;">
+                    <span id="generalMsg" style="font-size: 0.9rem;"></span>
+                    <button id="btnSaveGeneral" class="btn-primary" style="padding: 10px 20px;">
+                        Guardar Cambios Generales
                     </button>
                 </div>
             </header>
@@ -87,44 +114,366 @@
                     <h3 class="config-title">Comportamiento del Cotizador PDF</h3>
                     <p class="config-desc">Configuración interna financiera y firma oficial de los documentos PDF.</p>
                     <div class="config-form">
-                        <div class="form-group"><label>Margen de Utilidad por Defecto (%)</label><input type="number" value="30" title="Utilidad que usa el cotizador internamente al crear una fila nueva."></div>
+                        <div class="form-group"><label>Margen de Utilidad por Defecto (%)</label><input type="number" value="30"></div>
                         <div class="form-group"><label>Prefijo/Serie de Cotización (Ej: COT-2026)</label><input type="text" value="COT-2026-"></div>
                         <div class="form-group"><label>Validez de Cotización (Días)</label><input type="number" value="15"></div>
                         <div class="form-group"><label>Nombre del Responsable Comercial (Pie de firma)</label><input type="text" value="Ing. Zarlop"></div>
                     </div>
                 </div>
 
-                <!-- Avanzado -->
+                <!-- Cuentas IMAP -->
                 <div class="config-block">
-                    <h3 class="config-title">Módulo de Correo Remoto (Avanzado)</h3>
-                    <p class="config-desc">Estas configuraciones requieren llaves de la API de Google/Gmail para conectar la bandeja.</p>
-                    <div class="config-form">
-                        <div class="form-group" style="grid-column: span 2;">
-                            <label>Google Cloud Workspace API Key (En Desarrollo)</label>
-                            <input type="password" value="****************************************" disabled style="background: #e2e8f0; cursor: not-allowed;">
-                        </div>
+                    <h3 class="config-title">Cuentas de Correo Sincronizadas (IMAP)</h3>
+                    <p class="config-desc">Agrega una o varias cuentas de correo. Se sincronizarán automáticamente al presionar "Sincronizar" en la Bandeja.</p>
+                    
+                    <div id="accountsList"></div>
+                    
+                    <button class="btn-add-account" onclick="addAccountForm()">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14m-7-7h14"></path></svg>
+                        Agregar Cuenta de Correo
+                    </button>
+                </div>
+
+                <!-- Palabras Clave -->
+                <div class="config-block">
+                    <h3 class="config-title">Filtro por Palabras Clave (Positivas)</h3>
+                    <p class="config-desc">Solo se importarán correos cuyo asunto o cuerpo contenga al menos una de estas palabras. Si no hay palabras, se importan todos.</p>
+                    
+                    <div id="keywordsContainer" class="keywords-container"></div>
+                    
+                    <div class="keyword-input-row">
+                        <input type="text" id="newKeywordInput" placeholder="Escribe una palabra clave..." autocomplete="off">
+                        <button class="btn-primary" onclick="addKeyword()" style="padding: 8px 20px;">+ Agregar</button>
                     </div>
+                </div>
+
+                <!-- Lista Negra -->
+                <div class="config-block" style="border-left: 4px solid #ef4444;">
+                    <h3 class="config-title">Filtro de Exclusión (Lista Negra)</h3>
+                    <p class="config-desc">Cualquier correo que provenga de estos dominios o direcciones específicas <b>NUNCA</b> se importará (ej: <code>bcp.com.pe</code>, <code>google.com</code>, <code>no-reply@</code>).</p>
+                    
+                    <div id="blacklistContainer" class="keywords-container"></div>
+                    
+                    <div class="keyword-input-row">
+                        <input type="text" id="newBlacklistInput" placeholder="Escribe un dominio o correo a bloquear..." autocomplete="off">
+                        <button class="btn-primary" style="background:#ef4444; padding: 8px 20px;" onclick="addBlacklist()">+ Bloquear</button>
+                    </div>
+                </div>
+
+                <!-- Opciones de Adjuntos -->
+                <div class="config-block">
+                    <h3 class="config-title">Filtro de Archivos Adjuntos</h3>
+                    <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="requireAttachments" style="width:18px; height:18px;">
+                        <label for="requireAttachments" style="font-weight: 500; color: var(--sgd-text-main); cursor: pointer;">
+                            Solo importar correos que contengan archivos adjuntos (Ignorar el resto)
+                        </label>
+                    </div>
+                    <p class="config-desc" style="margin-top: 5px; margin-left: 28px;">Recomendado para filtrar publicidad o notificaciones bancarias que rara vez traen documentos de trabajo.</p>
+                </div>
+
+                <!-- Botón guardar todo -->
+                <div style="text-align: right; margin-bottom: 30px;">
+                    <span id="configMsg" style="margin-right: 15px; font-size: 0.9rem; font-weight: bold;"></span>
+                    <button id="btnSaveConfig" class="btn-primary" style="padding: 12px 30px; font-size: 1rem;">
+                        💾 Guardar Toda la Configuración
+                    </button>
                 </div>
 
             </div>
         </main>
     </div>
+
+    <!-- OVERLAY ANIMATION -->
+    <div id="saveOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; flex-direction:column;">
+        <div style="background:white; padding: 40px; border-radius: 12px; display:flex; flex-direction:column; align-items:center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); min-width: 280px;">
+            <svg id="saveSpinner" style="display:block; transform-origin: center; animation: spin 1s linear infinite;" viewBox="0 0 24 24" width="48" height="48" stroke="#3B82F6" stroke-width="2" fill="none"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path></svg>
+            <svg id="saveSuccess" style="display:none; color: #10B981;" viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <h3 id="overlayText" style="color:#1E293B; margin-top:15px; font-family:'Inter', sans-serif;">Guardando Datos...</h3>
+        </div>
+    </div>
+    <style> @keyframes spin { 100% { transform: rotate(360deg); } } </style>
     
     <script>
+        // ===== GLOBAL STATE =====
+        let accounts = [];
+        let keywords = [];
+        let blacklist = [];
+        let requireAttachments = true;
+
         function logout() {
             localStorage.removeItem('sgd_token');
             localStorage.removeItem('sgd_user');
             window.location.href = 'login.html';
         }
-        
-        document.addEventListener('DOMContentLoaded', () => {
+
+        // ===== OVERLAY FUNCTIONS =====
+        function showOverlay(text = 'Guardando...') {
+            document.getElementById('saveOverlay').style.display = 'flex';
+            document.getElementById('saveSpinner').style.display = 'block';
+            document.getElementById('saveSuccess').style.display = 'none';
+            document.getElementById('overlayText').textContent = text;
+            document.getElementById('overlayText').style.color = '#1E293B';
+        }
+        function showOverlaySuccess(text = '¡Guardado!') {
+            document.getElementById('saveSpinner').style.display = 'none';
+            document.getElementById('saveSuccess').style.display = 'block';
+            document.getElementById('saveSuccess').innerHTML = '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>';
+            document.getElementById('saveSuccess').style.color = '#10B981';
+            document.getElementById('overlayText').textContent = text;
+            document.getElementById('overlayText').style.color = '#10B981';
+            setTimeout(() => { document.getElementById('saveOverlay').style.display = 'none'; }, 1800);
+        }
+        function showOverlayError(text = 'Error') {
+            document.getElementById('saveOverlay').style.display = 'flex';
+            document.getElementById('saveSpinner').style.display = 'none';
+            document.getElementById('saveSuccess').style.display = 'block';
+            document.getElementById('saveSuccess').innerHTML = '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>';
+            document.getElementById('saveSuccess').style.color = '#EF4444';
+            document.getElementById('overlayText').textContent = text;
+            document.getElementById('overlayText').style.color = '#EF4444';
+            setTimeout(() => { document.getElementById('saveOverlay').style.display = 'none'; }, 3000);
+        }
+
+        // ===== ACCOUNT RENDERING =====
+        function renderAccounts() {
+            const container = document.getElementById('accountsList');
+            if (accounts.length === 0) {
+                container.innerHTML = '<p style="color: #94a3b8; font-style: italic; margin-bottom: 15px;">No hay cuentas configuradas. Agrega una cuenta de correo para sincronizar.</p>';
+                return;
+            }
+            container.innerHTML = accounts.map((acc, idx) => `
+                <div class="account-card ${acc.enabled === false ? 'disabled' : ''}">
+                    <div class="account-header">
+                        <div>
+                            <span class="account-name">${acc.name || 'Cuenta ' + (idx + 1)}</span>
+                            <span class="account-badge ${acc.enabled !== false ? 'active' : 'inactive'}">${acc.enabled !== false ? '● Activa' : '○ Inactiva'}</span>
+                        </div>
+                        <div class="account-actions">
+                            <button class="btn-icon" onclick="toggleAccount(${idx})" title="${acc.enabled !== false ? 'Desactivar' : 'Activar'}">
+                                ${acc.enabled !== false ? '⏸ Pausar' : '▶ Activar'}
+                            </button>
+                            <button class="btn-icon danger" onclick="removeAccount(${idx})" title="Eliminar cuenta">🗑 Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label>Nombre de la cuenta</label>
+                            <input type="text" value="${acc.name || ''}" onchange="accounts[${idx}].name = this.value" placeholder="Ej: Gmail Zarlop">
+                        </div>
+                        <div class="form-group">
+                            <label>Servidor IMAP</label>
+                            <input type="text" value="${acc.host || 'imap.gmail.com'}" onchange="accounts[${idx}].host = this.value" placeholder="imap.gmail.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Puerto</label>
+                            <input type="number" value="${acc.port || 993}" onchange="accounts[${idx}].port = parseInt(this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>Usuario (Correo)</label>
+                            <input type="email" value="${acc.auth?.user || ''}" onchange="accounts[${idx}].auth.user = this.value" placeholder="correo@gmail.com" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña / App Password</label>
+                            <input type="password" value="${acc.auth?.pass || ''}" onchange="accounts[${idx}].auth.pass = this.value" placeholder="App Password" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addAccountForm() {
+            const newId = 'acc_' + Date.now();
+            accounts.push({
+                id: newId,
+                name: '',
+                host: 'imap.gmail.com',
+                port: 993,
+                secure: true,
+                auth: { user: '', pass: '' },
+                enabled: true
+            });
+            renderAccounts();
+            // Scroll to the new account
+            const cards = document.querySelectorAll('.account-card');
+            if (cards.length > 0) cards[cards.length - 1].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function removeAccount(idx) {
+            if (confirm('¿Eliminar esta cuenta de correo?')) {
+                accounts.splice(idx, 1);
+                renderAccounts();
+            }
+        }
+
+        function toggleAccount(idx) {
+            accounts[idx].enabled = accounts[idx].enabled === false ? true : false;
+            renderAccounts();
+        }
+
+        // ===== KEYWORDS RENDERING =====
+        function renderKeywords() {
+            const container = document.getElementById('keywordsContainer');
+            if (keywords.length === 0) {
+                container.innerHTML = '<p style="color: #94a3b8; font-style: italic;">Sin filtro. Se importarán todos los correos.</p>';
+                return;
+            }
+            container.innerHTML = keywords.map((kw, idx) => `
+                <span class="keyword-tag">
+                    ${kw}
+                    <span class="remove-kw" onclick="removeKeyword(${idx})">×</span>
+                </span>
+            `).join('');
+        }
+
+        function addKeyword() {
+            const input = document.getElementById('newKeywordInput');
+            const val = input.value.trim().toLowerCase();
+            if (!val) return;
+            if (keywords.includes(val)) {
+                input.value = '';
+                return;
+            }
+            keywords.push(val);
+            input.value = '';
+            renderKeywords();
+        }
+
+        function removeKeyword(idx) {
+            keywords.splice(idx, 1);
+            renderKeywords();
+        }
+
+        // ===== BLACKLIST RENDERING =====
+        function renderBlacklist() {
+            const container = document.getElementById('blacklistContainer');
+            if (blacklist.length === 0) {
+                container.innerHTML = '<p style="color: #94a3b8; font-style: italic;">Sin filtros de exclusión.</p>';
+                return;
+            }
+            container.innerHTML = blacklist.map((kw, idx) => `
+                <span class="blacklist-tag">
+                    ${kw}
+                    <span class="remove-kw" onclick="removeBlacklist(${idx})">×</span>
+                </span>
+            `).join('');
+        }
+
+        function addBlacklist() {
+            const input = document.getElementById('newBlacklistInput');
+            const val = input.value.trim().toLowerCase();
+            if (!val) return;
+            if (blacklist.includes(val)) {
+                input.value = '';
+                return;
+            }
+            blacklist.push(val);
+            input.value = '';
+            renderBlacklist();
+        }
+
+        function removeBlacklist(idx) {
+            blacklist.splice(idx, 1);
+            renderBlacklist();
+        }
+
+        // ===== SAVE ALL CONFIG =====
+        async function saveAllConfig() {
+            // Validate at least one account has user/pass
+            for (const acc of accounts) {
+                if (acc.enabled !== false && (!acc.auth?.user || !acc.auth?.pass)) {
+                    showOverlayError('❌ La cuenta "' + (acc.name || acc.auth?.user || 'sin nombre') + '" no tiene usuario o contraseña');
+                    return false;
+                }
+            }
+
+            const payload = {
+                accounts: accounts.map(a => ({
+                    ...a,
+                    port: parseInt(a.port) || 993,
+                    secure: true
+                })),
+                keywords: keywords,
+                blacklist: blacklist,
+                requireAttachments: document.getElementById('requireAttachments').checked
+            };
+
+            try {
+                const r = await fetch('/api/mail/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const d = await r.json();
+                if (r.ok && d.success) {
+                    showOverlaySuccess('Configuración Guardada ✅');
+                    return true;
+                } else {
+                    throw new Error(d.error || 'Error del servidor');
+                }
+            } catch (e) {
+                showOverlayError('❌ ' + e.message);
+                return false;
+            }
+        }
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', async () => {
+            // User display
             const userData = localStorage.getItem('sgd_user');
-            if(userData) {
+            if (userData) {
                 try {
                     const user = JSON.parse(userData);
                     document.getElementById('displayUsername').textContent = user.username || 'Admin';
                 } catch(e) {}
             }
+
+            // Load config from backend
+            try {
+                const res = await fetch('/api/mail/config');
+                const data = await res.json();
+                if (data.success) {
+                    accounts = data.accounts || [];
+                    keywords = data.keywords || [];
+                    blacklist = data.blacklist || [];
+                    requireAttachments = data.requireAttachments !== undefined ? data.requireAttachments : true;
+                }
+            } catch (e) {
+                console.error('Error loading config:', e);
+            }
+
+            renderAccounts();
+            renderKeywords();
+            renderBlacklist();
+            document.getElementById('requireAttachments').checked = requireAttachments;
+
+            // Enter key adds keyword
+            document.getElementById('newKeywordInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); addKeyword(); }
+            });
+            
+            // Enter key adds blacklist
+            document.getElementById('newBlacklistInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); addBlacklist(); }
+            });
+
+            // Bottom save button
+            document.getElementById('btnSaveConfig').addEventListener('click', () => {
+                showOverlay('Guardando configuración...');
+                saveAllConfig();
+            });
+
+            // Top save button
+            document.getElementById('btnSaveGeneral').addEventListener('click', async () => {
+                showOverlay('Guardando todo...');
+                const msg = document.getElementById('generalMsg');
+                const ok = await saveAllConfig();
+                if (ok) {
+                    msg.style.color = '#10B981';
+                    msg.textContent = '✅ Guardado';
+                    setTimeout(() => msg.textContent = '', 3000);
+                }
+            });
         });
     </script>
 </body>

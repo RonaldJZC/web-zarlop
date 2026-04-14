@@ -17,8 +17,10 @@ const PORT = process.env.PORT || 3000;
 // MIDDLEWARE
 // ===================================
 
-// Security middleware
-app.use(helmet());
+// Security middleware (CSP desactivado para permitir scripts inline en SGD)
+app.use(helmet({
+    contentSecurityPolicy: false
+}));
 
 // CORS configuration
 app.use(cors({
@@ -50,12 +52,14 @@ const contactRoutes = require('./routes/contacts');
 const equipmentRoutes = require('./routes/equipment');
 const serviceRoutes = require('./routes/services');
 const sgdAuthRoutes = require('./routes/sgdAuth');
+const mailRoutes = require('./routes/mailRoute');
 
 // Use routes
 app.use('/api/contacts', contactRoutes);
 app.use('/api/equipment', equipmentRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/sgd', sgdAuthRoutes);
+app.use('/api/mail', mailRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
