@@ -1,0 +1,184 @@
+{
+  "analyses": [
+    {
+      "emailId": 1776049294353,
+      "fechaAnalisis": "2026-04-23T02:31:08.493Z",
+      "tiempoMs": 91767,
+      "motorUsado": "regex",
+      "geminiError": null,
+      "documentosLeidos": [
+        {
+          "id": "4fb4e08a_PROTECTOR_DE_RADIACION_PARA_GONADAS-EETT.pdf",
+          "name": "PROTECTOR DE RADIACION PARA GONADAS-EETT.pdf",
+          "type": "pdf",
+          "textLength": 0,
+          "pages": 8,
+          "isScanned": true,
+          "skipped": false,
+          "error": null
+        },
+        {
+          "id": "1e82fc72_ANEXOS_08_Y_09.docx",
+          "name": "ANEXOS 08 Y 09.docx",
+          "type": "word",
+          "textLength": 7137,
+          "pages": null,
+          "isScanned": false,
+          "skipped": false,
+          "error": null
+        }
+      ],
+      "documentosEscaneados": [
+        "PROTECTOR DE RADIACION PARA GONADAS-EETT.pdf"
+      ],
+      "ocrRequerido": true,
+      "tipoDocumento": "no_detectado",
+      "campos": {
+        "denominacion": {
+          "valor": "PROTECTORES GONADALES PLOMADOS PARA LA UNIDAD DE DIAGNOSTICO POR IMAGENES DEL HOSPITAL DE EMERGENCIAS VILLA EL SALVADOR -HEVES",
+          "confianza": "media",
+          "fuente": "subject"
+        },
+        "objetoContratacion": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "finalidadPublica": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "areaUsuaria": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "actividadesRequeridas": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "repuestosInsumos": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "perfilTecnico": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "entregables": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "requisitosProveedor": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "resumenEjecutivo": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "entidad": {
+          "valor": "HOSPITAL DE EMERGENCIAS VILLA EL SALVADOR",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "tipoSolicitud": {
+          "valor": "Solicitud de Cotización",
+          "confianza": "media",
+          "fuente": "regex"
+        },
+        "tipoDocumento": "no_detectado",
+        "cantidad": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "marcaModelo": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "seriePatrimonial": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "plazo": {
+          "valor": "o ejecuciÃ³n y garantÃ­a comercial",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "garantia": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "formaPago": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "penalidades": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "contacto": {
+          "valor": "ISAAC FLORES <programacion.heves.23@gmail.com>",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "valorEstimado": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_encontrado"
+        },
+        "lugarPrestacion": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        }
+      },
+      "semaforo": {
+        "estado": "incompleto",
+        "porcentaje": 23,
+        "detectados": 5,
+        "dudosos": 0,
+        "faltantes": 17,
+        "total": 22,
+        "detalles": {
+          "denominacion": "detectado",
+          "entidad": "detectado",
+          "tipoSolicitud": "detectado",
+          "cantidad": "faltante",
+          "plazo": "detectado",
+          "objetoContratacion": "faltante",
+          "garantia": "faltante",
+          "formaPago": "faltante",
+          "contacto": "detectado",
+          "marcaModelo": "faltante",
+          "finalidadPublica": "faltante",
+          "areaUsuaria": "faltante",
+          "actividadesRequeridas": "faltante",
+          "repuestosInsumos": "faltante",
+          "perfilTecnico": "faltante",
+          "entregables": "faltante",
+          "requisitosProveedor": "faltante",
+          "lugarPrestacion": "faltante",
+          "seriePatrimonial": "faltante",
+          "valorEstimado": "faltante",
+          "penalidades": "faltante",
+          "resumenEjecutivo": "faltante"
+        }
+      },
+      "textoCompleto": 9503
+    }
+  ]
+}

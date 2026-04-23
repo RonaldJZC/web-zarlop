@@ -201,4 +201,155 @@ router.post('/analyze/:id', async (req, res) => {
     }
 });
 
+// ===========================================================================
+// ANALIZADOR INTELIGENTE — Deep Analysis Endpoints
+// ===========================================================================
+
+const documentAnalyzer = require('../services/documentAnalyzer');
+const analysisDbPath = path.join(__dirname, '..', 'database', 'analysisDb.json');
+
+function readAnalysisDb() {
+    if (!fs.existsSync(analysisDbPath)) return { analyses: [] };
+    try { return jsonfile.readFileSync(analysisDbPath); } catch { return { analyses: [] }; }
+}
+function writeAnalysisDb(data) {
+    jsonfile.writeFileSync(analysisDbPath, data, { spaces: 2 });
+}
+
+// POST /api/mail/analyze-deep/:id — Full hybrid analysis (Regex + Gemini)
+router.post('/analyze-deep/:id', async (req, res) => {
+    try {
+        const emailId = parseInt(req.params.id);
+        const useGemini = req.body.useGemini !== false; // default true
+        const dbPath = path.join(__dirname, '..', 'database', 'mailDb.json');
+        const data = jsonfile.readFileSync(dbPath);
+        const emails = data.emails || [];
+
+        const email = emails.find(e => e.id === emailId);
+        if (!email) {
+            return res.status(404).json({ success: false, error: 'Correo no encontrado' });
+        }
+
+        console.log(`[DEEP-ANALYZE] Iniciando análisis profundo para correo ${emailId}...`);
+
+        // Run deep analysis
+        const analysis = await documentAnalyzer.analyzeDeep(email, { useGemini });
+
+        // Save to analysis history database
+        const analysisDb = readAnalysisDb();
+        const existingIdx = analysisDb.analyses.findIndex(a => a.emailId === emailId);
+        if (existingIdx >= 0) {
+            analysisDb.analyses[existingIdx] = analysis;
+        } else {
+            analysisDb.analyses.push(analysis);
+        }
+        writeAnalysisDb(analysisDb);
+
+        // Update email status in mailDb
+        email.status = 'analizado';
+        email.reqType = analysis.tipoDocumento || 'Analizado';
+        email.deep_analysis = true;
+        jsonfile.writeFileSync(dbPath, { emails }, { spaces: 2 });
+
+        console.log(`[DEEP-ANALYZE] Completado. Motor: ${analysis.motorUsado}, Semáforo: ${analysis.semaforo.porcentaje}%`);
+
+        res.json({ success: true, analysis });
+    } catch (error) {
+        console.error('Error in deep analysis:', error);
+        res.status(500).json({ success: false, error: error.message || 'Error en análisis profundo' });
+    }
+});
+
+// GET /api/mail/analysis/:id — Get saved analysis
+router.get('/analysis/:id', (req, res) => {
+    try {
+        const emailId = parseInt(req.params.id);
+        const analysisDb = readAnalysisDb();
+        const analysis = analysisDb.analyses.find(a => a.emailId === emailId);
+
+        if (!analysis) {
+            return res.json({ success: true, analysis: null, message: 'No hay análisis guardado' });
+        }
+
+        res.json({ success: true, analysis });
+    } catch (error) {
+        res.status(500).json({ success: false, error: 'Error al obtener análisis' });
+    }
+});
+
+// POST /api/mail/analysis/:id/validate — Save user-validated data
+router.post('/analysis/:id/validate', (req, res) => {
+    try {
+        const emailId = parseInt(req.params.id);
+        const { campos } = req.body;
+
+        const analysisDb = readAnalysisDb();
+        const analysis = analysisDb.analyses.find(a => a.emailId === emailId);
+
+        if (!analysis) {
+            return res.status(404).json({ success: false, error: 'Análisis no encontrado' });
+        }
+
+        // Merge user edits into the analysis
+        if (campos) {
+            for (const [key, value] of Object.entries(campos)) {
+                if (analysis.campos[key]) {
+                    analysis.campos[key].valor = value;
+                    analysis.campos[key].confianza = 'alta';
+                    analysis.campos[key].fuente = 'usuario';
+                    analysis.campos[key].editadoPor = 'usuario';
+                    analysis.campos[key].fechaEdicion = new Date().toISOString();
+                } else {
+                    analysis.campos[key] = {
+                        valor: value,
+                        confianza: 'alta',
+                        fuente: 'usuario',
+                        editadoPor: 'usuario',
+                        fechaEdicion: new Date().toISOString()
+                    };
+                }
+            }
+        }
+
+        analysis.validadoPorUsuario = true;
+        analysis.fechaValidacion = new Date().toISOString();
+
+        // Recalculate semaphore is not needed here since user validated
+        writeAnalysisDb(analysisDb);
+
+        // Update email status
+        const dbPath = path.join(__dirname, '..', 'database', 'mailDb.json');
+        const data = jsonfile.readFileSync(dbPath);
+        const email = (data.emails || []).find(e => e.id === emailId);
+        if (email) {
+            email.status = 'validado';
+            jsonfile.writeFileSync(dbPath, { emails: data.emails }, { spaces: 2 });
+        }
+
+        res.json({ success: true, message: 'Análisis validado y guardado' });
+    } catch (error) {
+        console.error('Error validating analysis:', error);
+        res.status(500).json({ success: false, error: 'Error al validar' });
+    }
+});
+
+// GET /api/mail/analysis/:id/export — Export analysis as JSON download
+router.get('/analysis/:id/export', (req, res) => {
+    try {
+        const emailId = parseInt(req.params.id);
+        const analysisDb = readAnalysisDb();
+        const analysis = analysisDb.analyses.find(a => a.emailId === emailId);
+
+        if (!analysis) {
+            return res.status(404).json({ success: false, error: 'Análisis no encontrado' });
+        }
+
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Disposition', `attachment; filename="analisis_${emailId}.json"`);
+        res.json(analysis);
+    } catch (error) {
+        res.status(500).json({ success: false, error: 'Error al exportar' });
+    }
+});
+
 module.exports = router;
