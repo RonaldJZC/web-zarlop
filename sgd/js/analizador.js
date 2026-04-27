@@ -1,6 +1,12 @@
 /**
  * Analizador Inteligente — Frontend Logic
  * Controls the 3-panel layout: email list, document viewer, structured form
+ * 
+ * Features:
+ * - Auto-analysis on email selection (if not previously analyzed)
+ * - Hybrid engine: Regex + Gemini AI
+ * - Real-time progress indicators
+ * - Editable fields with validation
  */
 
 // ============================================================================
@@ -10,6 +16,7 @@ let allEmails = [];
 let selectedEmail = null;
 let currentAnalysis = null;
 let activeTab = 'pdf';
+let isAnalyzing = false;
 
 // Field definitions for the form (labels and groups)
 const FIELD_SCHEMA = {
@@ -61,6 +68,16 @@ const FIELD_SCHEMA = {
         }
     }
 };
+
+// Progress messages shown during analysis
+const PROGRESS_MESSAGES = [
+    '📂 Leyendo documentos adjuntos...',
+    '📄 Extrayendo texto de PDFs y DOCX...',
+    '🔍 Ejecutando motor Regex para datos exactos...',
+    '🧠 Enviando a Gemini AI para interpretación contextual...',
+    '⚙️ Fusionando resultados Regex + IA...',
+    '📊 Calculando semáforo de completitud...'
+];
 
 // ============================================================================
 // INITIALIZATION
@@ -180,6 +197,8 @@ function selectEmailById(id) {
 }
 
 async function selectEmail(email) {
+    if (isAnalyzing) return; // Don't switch while analyzing
+    
     selectedEmail = email;
     renderEmailList(filterEmails(document.getElementById('searchEmails').value));
 
@@ -197,9 +216,13 @@ async function selectEmail(email) {
         if (data.success && data.analysis) {
             currentAnalysis = data.analysis;
             renderForm(currentAnalysis);
+            updateEngineStatus(currentAnalysis.motorUsado);
         } else {
             currentAnalysis = null;
             renderFormEmpty();
+            // AUTO-ANALYZE: If no analysis exists, run it automatically
+            console.log(`[AUTO-ANALYZE] Correo ${email.id} sin análisis previo. Iniciando análisis automático...`);
+            runAnalysis();
         }
     } catch (err) {
         currentAnalysis = null;
@@ -229,7 +252,14 @@ function renderViewer() {
         const pdfs = (selectedEmail.adjuntos || []).filter(a => a.type === 'pdf');
         if (pdfs.length > 0) {
             const pdf = pdfs[0];
-            body.innerHTML = `<iframe class="viewer-iframe" src="${pdf.url}" title="PDF Viewer"></iframe>`;
+            // Selector for multiple PDFs
+            let pdfSelector = '';
+            if (pdfs.length > 1) {
+                pdfSelector = `<div class="pdf-selector">${pdfs.map((p, i) => 
+                    `<button class="pdf-tab ${i === 0 ? 'active' : ''}" onclick="switchPdf('${p.url}', '${escapeHtml(p.name)}', this)">${escapeHtml(p.name.substring(0, 30))}${p.name.length > 30 ? '...' : ''}</button>`
+                ).join('')}</div>`;
+            }
+            body.innerHTML = `${pdfSelector}<iframe class="viewer-iframe" id="pdfFrame" src="${pdf.url}" title="PDF Viewer"></iframe>`;
             docName.textContent = pdf.name;
         } else {
             body.innerHTML = `<div class="viewer-placeholder">
@@ -242,9 +272,31 @@ function renderViewer() {
     } else if (activeTab === 'text') {
         // Show extracted text from analysis
         if (currentAnalysis && currentAnalysis.documentosLeidos) {
-            const docs = currentAnalysis.documentosLeidos.filter(d => d.textLength > 0);
-            const info = docs.map(d => `📄 ${d.name}: ${d.textLength} caracteres (${d.pages || '?'} páginas)`).join('\n');
-            body.innerHTML = `<div class="viewer-text-content" id="textViewer">${info || 'Ejecuta el análisis primero para extraer texto.'}\n\n${'—'.repeat(40)}\nPresiona "Analizar" para ver el texto extraído de los documentos.</div>`;
+            const docs = currentAnalysis.documentosLeidos;
+            let content = '';
+            
+            // Document summary
+            content += '═══════════════════════════════════════\n';
+            content += '  RESUMEN DE DOCUMENTOS PROCESADOS\n';
+            content += '═══════════════════════════════════════\n\n';
+            
+            docs.forEach(d => {
+                const icon = d.isScanned ? '⚠️' : (d.textLength > 0 ? '✅' : '❌');
+                const status = d.isScanned ? 'ESCANEADO (requiere OCR)' : 
+                              (d.textLength > 0 ? `${d.textLength.toLocaleString()} caracteres extraídos` : 
+                              (d.skipped ? `Omitido: ${d.reason || 'tipo no soportado'}` : 'Sin texto'));
+                content += `${icon} ${d.name}\n   → ${status}${d.pages ? ` | ${d.pages} páginas` : ''}\n\n`;
+            });
+            
+            content += `\n📊 Motor utilizado: ${currentAnalysis.motorUsado || 'regex'}\n`;
+            content += `⏱️ Tiempo de análisis: ${currentAnalysis.tiempoMs || 0}ms\n`;
+            content += `📏 Texto total combinado: ${(currentAnalysis.textoCompleto || 0).toLocaleString()} caracteres\n`;
+            
+            if (currentAnalysis.geminiError) {
+                content += `\n⚠️ Error Gemini: ${currentAnalysis.geminiError}\n`;
+            }
+            
+            body.innerHTML = `<div class="viewer-text-content">${escapeHtml(content)}</div>`;
         } else {
             body.innerHTML = `<div class="viewer-text-content">Presiona "Analizar" para extraer y visualizar el texto de los documentos adjuntos.</div>`;
         }
@@ -257,22 +309,61 @@ function renderViewer() {
     }
 }
 
+function switchPdf(url, name, btn) {
+    document.getElementById('pdfFrame').src = url;
+    document.getElementById('viewerDocName').textContent = name;
+    document.querySelectorAll('.pdf-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+// ============================================================================
+// ENGINE STATUS INDICATOR
+// ============================================================================
+function updateEngineStatus(motor) {
+    const el = document.getElementById('engineStatus');
+    if (motor === 'regex+gemini') {
+        el.innerHTML = '<span class="engine-badge ai">🧠 Gemini AI + Regex</span>';
+    } else if (motor === 'regex') {
+        el.innerHTML = '<span class="engine-badge regex">🔍 Solo Regex</span>';
+    } else {
+        el.innerHTML = '<span class="engine-badge">Motor: Regex + Gemini AI</span>';
+    }
+}
+
 // ============================================================================
 // ANALYSIS EXECUTION
 // ============================================================================
 async function runAnalysis(force = false) {
-    if (!selectedEmail) return;
+    if (!selectedEmail || isAnalyzing) return;
+    isAnalyzing = true;
 
-    // Show loading
+    // Show loading with progress
     const formBody = document.getElementById('formBody');
     formBody.innerHTML = `<div class="analyzer-loading">
         <div class="spinner"></div>
-        <p>Analizando documentos...</p>
-        <div class="sub">Regex + Gemini AI procesando TDR/EETT</div>
+        <p id="progressMsg">📂 Iniciando análisis...</p>
+        <div class="sub" id="progressSub">Motor híbrido: Regex + Gemini AI</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
     </div>`;
 
     document.getElementById('semaforo').className = 'semaforo pending';
     document.getElementById('semaforo').innerHTML = '<span>⏳</span> Analizando...';
+    document.getElementById('btnAnalyze').disabled = true;
+    document.getElementById('btnReanalyze').disabled = true;
+
+    // Animate progress messages
+    let msgIdx = 0;
+    const progressInterval = setInterval(() => {
+        msgIdx++;
+        if (msgIdx < PROGRESS_MESSAGES.length) {
+            const pMsg = document.getElementById('progressMsg');
+            const pBar = document.getElementById('progressBar');
+            if (pMsg) pMsg.textContent = PROGRESS_MESSAGES[msgIdx];
+            if (pBar) pBar.style.width = `${((msgIdx + 1) / PROGRESS_MESSAGES.length) * 90}%`;
+        }
+    }, 2500);
 
     try {
         const res = await fetch(`/api/mail/analyze-deep/${selectedEmail.id}`, {
@@ -281,10 +372,20 @@ async function runAnalysis(force = false) {
             body: JSON.stringify({ useGemini: true })
         });
 
+        clearInterval(progressInterval);
+        const pBar = document.getElementById('progressBar');
+        if (pBar) pBar.style.width = '100%';
+
         const data = await res.json();
         if (data.success && data.analysis) {
             currentAnalysis = data.analysis;
+            
+            // Brief delay to show 100% completion
+            await new Promise(r => setTimeout(r, 300));
+            
             renderForm(currentAnalysis);
+            updateEngineStatus(currentAnalysis.motorUsado);
+            
             // Update email status in the list
             selectedEmail.status = 'analizado';
             selectedEmail.deep_analysis = true;
@@ -294,7 +395,12 @@ async function runAnalysis(force = false) {
             formBody.innerHTML = `<div class="empty-state"><h4>Error</h4><p>${data.error || 'Error desconocido'}</p></div>`;
         }
     } catch (err) {
+        clearInterval(progressInterval);
         formBody.innerHTML = `<div class="empty-state"><h4>Error de conexión</h4><p>${err.message}</p></div>`;
+    } finally {
+        isAnalyzing = false;
+        document.getElementById('btnAnalyze').disabled = false;
+        document.getElementById('btnReanalyze').disabled = false;
     }
 }
 
@@ -326,6 +432,17 @@ function renderForm(analysis) {
 
     // Build form
     let html = '';
+    
+    // Motor indicator at top
+    const motor = analysis.motorUsado || 'regex';
+    const motorClass = motor === 'regex+gemini' ? 'ai' : 'regex-only';
+    html += `<div class="motor-banner ${motorClass}">
+        <span class="motor-icon">${motor === 'regex+gemini' ? '🧠' : '🔍'}</span>
+        <span>Motor: <strong>${motor === 'regex+gemini' ? 'Regex + Gemini AI' : 'Solo Regex'}</strong></span>
+        ${analysis.geminiError ? `<span class="motor-error">⚠️ ${analysis.geminiError}</span>` : ''}
+        <span class="motor-time">⏱️ ${((analysis.tiempoMs || 0) / 1000).toFixed(1)}s</span>
+    </div>`;
+    
     for (const [groupKey, group] of Object.entries(FIELD_SCHEMA)) {
         html += `<div class="field-group"><div class="field-group-title">${group.title}</div>`;
         for (const [fieldKey, fieldDef] of Object.entries(group.fields)) {
@@ -373,7 +490,7 @@ function renderForm(analysis) {
     // Show stats
     const stats = document.getElementById('analysisStats');
     stats.style.display = 'flex';
-    document.getElementById('statTime').textContent = `${analysis.tiempoMs || 0}ms`;
+    document.getElementById('statTime').textContent = `${((analysis.tiempoMs || 0) / 1000).toFixed(1)}s`;
     document.getElementById('statMotor').textContent = analysis.motorUsado || 'regex';
     document.getElementById('statDocs').textContent = `${(analysis.documentosLeidos || []).length} docs`;
 
@@ -420,15 +537,38 @@ async function validateAnalysis() {
 
             selectedEmail.status = 'validado';
             renderEmailList(filterEmails(document.getElementById('searchEmails').value));
+            
+            // Show success toast
+            showToast('✅ Análisis validado y guardado correctamente');
         }
     } catch (err) {
         console.error('Error validating:', err);
+        showToast('❌ Error al validar el análisis', 'error');
     }
 }
 
 function exportAnalysis() {
     if (!selectedEmail) return;
     window.open(`/api/mail/analysis/${selectedEmail.id}/export`, '_blank');
+}
+
+// ============================================================================
+// TOAST NOTIFICATION
+// ============================================================================
+function showToast(message, type = 'success') {
+    const existing = document.querySelector('.toast-notification');
+    if (existing) existing.remove();
+    
+    const toast = document.createElement('div');
+    toast.className = `toast-notification ${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 }
 
 // ============================================================================

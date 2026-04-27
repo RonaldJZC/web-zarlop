@@ -2,9 +2,9 @@
   "analyses": [
     {
       "emailId": 1776049294353,
-      "fechaAnalisis": "2026-04-23T02:31:08.493Z",
-      "tiempoMs": 91767,
-      "motorUsado": "regex",
+      "fechaAnalisis": "2026-04-27T04:18:01.554Z",
+      "tiempoMs": 18791,
+      "motorUsado": "regex+gemini",
       "geminiError": null,
       "documentosLeidos": [
         {
@@ -32,57 +32,47 @@
         "PROTECTOR DE RADIACION PARA GONADAS-EETT.pdf"
       ],
       "ocrRequerido": true,
-      "tipoDocumento": "no_detectado",
+      "tipoDocumento": "adquisicion",
       "campos": {
         "denominacion": {
-          "valor": "PROTECTORES GONADALES PLOMADOS PARA LA UNIDAD DE DIAGNOSTICO POR IMAGENES DEL HOSPITAL DE EMERGENCIAS VILLA EL SALVADOR -HEVES",
-          "confianza": "media",
-          "fuente": "subject"
+          "valor": "REQUERIMIENTO URGENTE DE PROTECTORES GONADALES PLOMADOS PARA LA UNIDAD DE DIAGNOSTICO POR IMAGENES DEL HOSPITAL DE EMERGENCIAS VILLA EL SALVADOR -HEVES",
+          "confianza": "alta"
         },
         "objetoContratacion": {
-          "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "valor": "Adquisición de PROTECTORES GONADALES PLOMADOS para la UNIDAD DE DIAGNOSTICO POR IMAGENES del Hospital de Emergencias Villa El Salvador.",
+          "confianza": "alta"
         },
         "finalidadPublica": {
-          "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "valor": "Garantizar la protección radiológica de los pacientes en la Unidad de Diagnóstico por Imágenes, contribuyendo a la seguridad y salud pública.",
+          "confianza": "media"
         },
         "areaUsuaria": {
-          "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "valor": "UNIDAD DE DIAGNOSTICO POR IMAGENES",
+          "confianza": "alta"
         },
         "actividadesRequeridas": {
           "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "confianza": "alta"
         },
         "repuestosInsumos": {
-          "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "valor": "Protectores gonadales plomados",
+          "confianza": "alta"
         },
         "perfilTecnico": {
           "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "confianza": "alta"
         },
         "entregables": {
-          "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "valor": "Protectores gonadales plomados, comprobante de pago - SUNAT, y toda la documentación solicitada en las Especificaciones Técnicas (EETT).",
+          "confianza": "alta"
         },
         "requisitosProveedor": {
-          "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "valor": "Registro Nacional de Proveedores (si supera 01 UIT); Carta de exclusividad (de corresponder); Código de Cuenta Interbancaria y Cuenta de Detracciones (de ser el caso); Declaración jurada de cumplimiento de especificaciones técnicas y/o términos de referencia; Declaración jurada de no parentesco con autoridades/funcionarios del Hospital; Declaración jurada de no estar inhabilitado para contratar con el Estado; Declaración jurada de no percibir más de una remuneración del Estado (salvo excepciones); Declaración jurada de no incurrir en actos de corrupción; Declaración jurada de no tener impedimento y/o inhabilitación para contratar con el Estado; Declaración jurada de no intervenir en procesos administrativos y/o judiciales con el Hospital; Declaración jurada de no tener antecedentes penales; Compromiso de guardar secreto/reserva de información; Compromiso de no divulgar información; Aceptación de las condiciones y reglas del procedimiento de contratación; Declaración jurada de no pertenecer al mismo grupo económico con otras empresas cotizantes.",
+          "confianza": "alta"
         },
         "resumenEjecutivo": {
-          "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "valor": "El Hospital de Emergencias Villa El Salvador está realizando un estudio de mercado para la adquisición urgente de protectores gonadales plomados para su Unidad de Diagnóstico por Imágenes. Se solicita a los proveedores presentar cotizaciones que cumplan con las características técnicas y condiciones requeridas, incluyendo documentación específica y el precio 'a todo costo', con plazo de respuesta hasta el 13 de abril de 2026.",
+          "confianza": "alta"
         },
         "entidad": {
           "valor": "HOSPITAL DE EMERGENCIAS VILLA EL SALVADOR",
@@ -94,7 +84,7 @@
           "confianza": "media",
           "fuente": "regex"
         },
-        "tipoDocumento": "no_detectado",
+        "tipoDocumento": "adquisicion",
         "cantidad": {
           "valor": null,
           "confianza": "baja",
@@ -121,9 +111,184 @@
           "fuente": "no_detectado"
         },
         "formaPago": {
+          "valor": "Abonos en cuenta bancaria (CCI y Cuenta de Detracciones de ser el caso), expresado en soles, incluyendo todos los impuestos y gastos (a todo costo).",
+          "confianza": "media",
+          "fuente": "gemini"
+        },
+        "penalidades": {
+          "valor": "El proveedor será acreedor a sanciones administrativas y penales que impongan los reglamentos y dispositivos legales correspondientes en caso de incumplimiento o falsedad en las declaraciones.",
+          "confianza": "baja",
+          "fuente": "gemini"
+        },
+        "contacto": {
+          "valor": "ISAAC FLORES <programacion.heves.23@gmail.com>",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "valorEstimado": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_encontrado"
+        },
+        "lugarPrestacion": {
+          "valor": "Hospital de Emergencias Villa El Salvador, para la Unidad de Diagnóstico por Imágenes.",
+          "confianza": "alta"
+        }
+      },
+      "semaforo": {
+        "estado": "revisar",
+        "porcentaje": 64,
+        "detectados": 14,
+        "dudosos": 1,
+        "faltantes": 7,
+        "total": 22,
+        "detalles": {
+          "denominacion": "detectado",
+          "entidad": "detectado",
+          "tipoSolicitud": "detectado",
+          "cantidad": "faltante",
+          "plazo": "detectado",
+          "objetoContratacion": "detectado",
+          "garantia": "faltante",
+          "formaPago": "detectado",
+          "contacto": "detectado",
+          "marcaModelo": "faltante",
+          "finalidadPublica": "detectado",
+          "areaUsuaria": "detectado",
+          "actividadesRequeridas": "faltante",
+          "repuestosInsumos": "detectado",
+          "perfilTecnico": "faltante",
+          "entregables": "detectado",
+          "requisitosProveedor": "detectado",
+          "lugarPrestacion": "detectado",
+          "seriePatrimonial": "faltante",
+          "valorEstimado": "faltante",
+          "penalidades": "dudoso",
+          "resumenEjecutivo": "detectado"
+        }
+      },
+      "textoCompleto": 9503
+    },
+    {
+      "emailId": 1776049293958,
+      "fechaAnalisis": "2026-04-27T04:19:11.425Z",
+      "tiempoMs": 23568,
+      "motorUsado": "regex+gemini",
+      "geminiError": null,
+      "documentosLeidos": [
+        {
+          "id": "7df36e52_ANEXOS_08_Y_09.docx",
+          "name": "ANEXOS 08 Y 09.docx",
+          "type": "word",
+          "textLength": 7137,
+          "pages": null,
+          "isScanned": false,
+          "skipped": false,
+          "error": null
+        },
+        {
+          "id": "b9ab93f3_INSUMOS_QUIMICOS_PARA_EL_AGUA_QUE_USA_EL_EQUIPAMIENTO_-_EETT.pdf",
+          "name": "INSUMOS QUIMICOS PARA EL AGUA QUE USA EL EQUIPAMIENTO - EETT.pdf",
+          "type": "pdf",
+          "textLength": 0,
+          "pages": 8,
+          "isScanned": true,
+          "skipped": false,
+          "error": null
+        }
+      ],
+      "documentosEscaneados": [
+        "INSUMOS QUIMICOS PARA EL AGUA QUE USA EL EQUIPAMIENTO - EETT.pdf"
+      ],
+      "ocrRequerido": true,
+      "tipoDocumento": {
+        "valor": "adquisicion",
+        "confianza": "alta"
+      },
+      "campos": {
+        "denominacion": {
+          "valor": "REQUERIMIENTO DE INSUMOS QUIMICOS PARA LAS CALDERAS Y TORRES DE ENFRIAMIENTO DEL HOSPITAL DE EMERGENCIAS VILLA EL SALVADOR -HEVES",
+          "confianza": "alta"
+        },
+        "objetoContratacion": {
+          "valor": "Adquisición de insumos químicos para el mantenimiento de las calderas y torres de enfriamiento del Hospital de Emergencias Villa El Salvador.",
+          "confianza": "alta"
+        },
+        "finalidadPublica": {
+          "valor": "Garantizar el correcto funcionamiento de la infraestructura crítica (calderas y torres de enfriamiento) del Hospital de Emergencias Villa El Salvador, asegurando la continuidad y calidad de los servicios de salud y atención de emergencias a la población.",
+          "confianza": "media"
+        },
+        "areaUsuaria": {
+          "valor": null,
+          "confianza": "media"
+        },
+        "actividadesRequeridas": {
+          "valor": null,
+          "confianza": "alta"
+        },
+        "repuestosInsumos": {
+          "valor": "Insumos químicos para calderas y torres de enfriamiento.",
+          "confianza": "alta"
+        },
+        "perfilTecnico": {
+          "valor": null,
+          "confianza": "alta"
+        },
+        "entregables": {
+          "valor": "Cotización, declaración expresa de cumplimiento de especificaciones técnicas, información de marca, procedencia, presentación, garantía del producto, plazo de entrega/ejecución, garantía comercial, anexos adjuntos debidamente llenados y firmados, documentación solicitada en las EETT, y muestras (de corresponder).",
+          "confianza": "alta"
+        },
+        "requisitosProveedor": {
+          "valor": "Registro Nacional de Proveedores (si aplica, para montos mayores a 01 UIT), Carta de exclusividad (de corresponder), Código de Cuenta Interbancaria (CCI) y Cuenta de Detracciones (de ser el caso), datos de contacto (nombres/razón social, RUC, domicilio, correo electrónico, teléfono). Declaraciones juradas de: cumplimiento de especificaciones técnicas, no parentesco con autoridades/funcionarios del hospital, no inhabilitación para contratar con el Estado, no participación en actos de corrupción, no impedimento para contratar con el Estado, no intervención en procesos administrativos/judiciales con el hospital, no antecedentes penales, guardar secreto o reserva de información, y no pertenecer al mismo grupo económico que otras empresas invitadas a cotizar.",
+          "confianza": "alta"
+        },
+        "resumenEjecutivo": {
+          "valor": "El Hospital de Emergencias Villa El Salvador (HEVES) ha iniciado un estudio de mercado urgente para la adquisición de insumos químicos destinados a sus calderas y torres de enfriamiento. Se solicita a los proveedores presentar cotizaciones que cumplan con las especificaciones técnicas adjuntas, incluyendo detalles de marca, garantía y plazo de entrega, junto con declaraciones juradas y anexos, antes del 13 de abril de 2026.",
+          "confianza": "alta"
+        },
+        "entidad": {
+          "valor": "HOSPITAL DE EMERGENCIAS VILLA EL SALVADOR",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "tipoSolicitud": {
+          "valor": "Solicitud de Cotización",
+          "confianza": "media",
+          "fuente": "regex"
+        },
+        "tipoDocumento": {
+          "valor": "adquisicion",
+          "confianza": "alta"
+        },
+        "cantidad": {
           "valor": null,
           "confianza": "baja",
           "fuente": "no_detectado"
+        },
+        "marcaModelo": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "seriePatrimonial": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "plazo": {
+          "valor": "o ejecuciÃ³n y garantÃ­a comercial",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "garantia": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "formaPago": {
+          "valor": "En soles, a todo costo (incluye impuestos y gastos), mediante abono en la Cuenta de Detracciones y/o Cuenta Interbancaria (CCI) del proveedor.",
+          "confianza": "alta",
+          "fuente": "gemini"
         },
         "penalidades": {
           "valor": null,
@@ -141,17 +306,16 @@
           "fuente": "no_encontrado"
         },
         "lugarPrestacion": {
-          "valor": null,
-          "confianza": "baja",
-          "fuente": "no_detectado"
+          "valor": "Hospital de Emergencias Villa El Salvador (HEVES), Villa El Salvador",
+          "confianza": "alta"
         }
       },
       "semaforo": {
-        "estado": "incompleto",
-        "porcentaje": 23,
-        "detectados": 5,
+        "estado": "revisar",
+        "porcentaje": 59,
+        "detectados": 13,
         "dudosos": 0,
-        "faltantes": 17,
+        "faltantes": 9,
         "total": 22,
         "detalles": {
           "denominacion": "detectado",
@@ -159,26 +323,26 @@
           "tipoSolicitud": "detectado",
           "cantidad": "faltante",
           "plazo": "detectado",
-          "objetoContratacion": "faltante",
+          "objetoContratacion": "detectado",
           "garantia": "faltante",
-          "formaPago": "faltante",
+          "formaPago": "detectado",
           "contacto": "detectado",
           "marcaModelo": "faltante",
-          "finalidadPublica": "faltante",
+          "finalidadPublica": "detectado",
           "areaUsuaria": "faltante",
           "actividadesRequeridas": "faltante",
-          "repuestosInsumos": "faltante",
+          "repuestosInsumos": "detectado",
           "perfilTecnico": "faltante",
-          "entregables": "faltante",
-          "requisitosProveedor": "faltante",
-          "lugarPrestacion": "faltante",
+          "entregables": "detectado",
+          "requisitosProveedor": "detectado",
+          "lugarPrestacion": "detectado",
           "seriePatrimonial": "faltante",
           "valorEstimado": "faltante",
           "penalidades": "faltante",
-          "resumenEjecutivo": "faltante"
+          "resumenEjecutivo": "detectado"
         }
       },
-      "textoCompleto": 9503
+      "textoCompleto": 9461
     }
   ]
 }

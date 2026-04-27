@@ -12,7 +12,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 // API Key - loaded from environment or hardcoded for development
 const API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyBC4aTzHV7JRPMzXbPKI_UL72FLwV_rFtI';
 
-const MODELS = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+const MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.0-flash-lite'];
 let currentModelIdx = 0;
 let genAI = null;
 let model = null;
@@ -32,6 +32,17 @@ function initGemini() {
  * Includes automatic retry with backoff and model fallback
  */
 async function analyzeDocument(text, documentType = 'unknown') {
+    if (!text || text.trim().length < 30) {
+        console.warn(`[GEMINI] Texto insuficiente para análisis (${(text || '').length} chars). Saltando Gemini.`);
+        return {
+            error: true,
+            errorMessage: 'Texto insuficiente para análisis con IA',
+            tipoDocumento: 'no_detectado',
+            campos: {}
+        };
+    }
+
+    console.log(`[GEMINI] Preparando análisis. Texto: ${text.length} chars, Tipo doc: ${documentType}`);
     const truncatedText = text.length > 15000 ? text.substring(0, 15000) + '\n[... texto truncado ...]' : text;
     const prompt = buildPrompt(truncatedText, documentType);
 
@@ -42,11 +53,13 @@ async function analyzeDocument(text, documentType = 'unknown') {
 
         for (let attempt = 0; attempt < 2; attempt++) {
             try {
+                console.log(`[GEMINI] Enviando a ${MODELS[mi]} (intento ${attempt + 1})...`);
                 const result = await geminiModel.generateContent(prompt);
                 const response = await result.response;
                 const responseText = response.text();
+                console.log(`[GEMINI] Respuesta recibida: ${responseText.length} chars`);
                 const parsed = parseGeminiResponse(responseText);
-                console.log(`[GEMINI] ✅ Análisis completado con ${MODELS[mi]}. Tipo: ${parsed.tipoDocumento || 'N/A'}`);
+                console.log(`[GEMINI] ✅ Análisis completado con ${MODELS[mi]}. Tipo: ${parsed.tipoDocumento || 'N/A'}, Campos: ${Object.keys(parsed.campos || {}).length}`);
                 return parsed;
             } catch (error) {
                 const isRateLimit = error.message && error.message.includes('429');

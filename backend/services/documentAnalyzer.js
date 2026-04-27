@@ -11,7 +11,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { PDFParse } = require('pdf-parse');
+const { PDFParse, VerbosityLevel } = require('pdf-parse');
 const mammoth = require('mammoth');
 const geminiService = require('./geminiService');
 
@@ -29,15 +29,23 @@ function normalizeText(text) {
 /** Read text from PDF file using pdf-parse v2 */
 async function readPdfText(filePath) {
     try {
-        if (!fs.existsSync(filePath)) return { text: '', pages: 0, isScanned: false };
+        if (!fs.existsSync(filePath)) {
+            console.warn(`[DOC-ANALYZER] PDF no encontrado: ${filePath}`);
+            return { text: '', pages: 0, isScanned: false };
+        }
         const buf = fs.readFileSync(filePath);
-        const parser = new PDFParse({ data: buf });
+        console.log(`[DOC-ANALYZER] Leyendo PDF: ${path.basename(filePath)} (${(buf.length / 1024).toFixed(1)} KB)`);
+        
+        const parser = new PDFParse({ data: buf, verbosity: VerbosityLevel.ERRORS });
         await parser.load();
         const result = await parser.getText();
         
+        // Clean page markers from text
         const text = (result.text || '').replace(/--\s*\d+\s+of\s+\d+\s*--/g, '').trim();
         const pageCount = result.total || 0;
         const isScanned = text.length < 50 && pageCount > 0;
+        
+        console.log(`[DOC-ANALYZER] PDF extraído: ${text.length} caracteres, ${pageCount} páginas${isScanned ? ' (ESCANEADO - sin texto)' : ''}`);
         
         await parser.destroy();
         return { text, pages: pageCount, isScanned };

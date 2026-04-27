@@ -428,3 +428,126 @@ textarea.field-input {
 @media (max-width: 900px) {
     .analyzer-container { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
 }
+
+/* === Progress Bar === */
+.progress-bar-container {
+    width: 200px;
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 2px;
+    margin-top: 14px;
+    overflow: hidden;
+}
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 2px;
+    width: 10%;
+    transition: width 0.8s ease;
+}
+
+/* === Motor Banner (top of form) === */
+.motor-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+.motor-banner.ai {
+    background: linear-gradient(135deg, #fae8ff 0%, #e0e7ff 100%);
+    border: 1px solid #c4b5fd;
+    color: #5b21b6;
+}
+.motor-banner.regex-only {
+    background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%);
+    border: 1px solid #93c5fd;
+    color: #1e40af;
+}
+.motor-banner .motor-icon { font-size: 1.1rem; }
+.motor-banner .motor-error {
+    font-size: 0.7rem;
+    color: #dc2626;
+    background: #fef2f2;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+.motor-banner .motor-time {
+    margin-left: auto;
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* === Engine Status Badge in Topbar === */
+.engine-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+.engine-badge.ai {
+    background: linear-gradient(135deg, #c084fc, #818cf8);
+    color: white;
+}
+.engine-badge.regex {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* === PDF Selector Tabs === */
+.pdf-selector {
+    display: flex;
+    gap: 4px;
+    padding: 6px 8px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+    overflow-x: auto;
+    flex-shrink: 0;
+}
+.pdf-tab {
+    padding: 4px 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    background: transparent;
+    color: #64748b;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+.pdf-tab:hover { background: white; }
+.pdf-tab.active { background: white; border-color: #3b82f6; color: #1d4ed8; font-weight: 600; }
+
+/* === Toast Notification === */
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: white;
+    background: #10b981;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    z-index: 10000;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+.toast-notification.show { transform: translateY(0); opacity: 1; }
+.toast-notification.error { background: #ef4444; }
+
+/* === Button disabled state === */
+.form-actions .btn-sm:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
