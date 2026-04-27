@@ -62,7 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td><div style="max-width:250px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${correo.subject}">${correo.subject}</div></td>
                 <td style="display:flex; flex-wrap:wrap;">${adjuntosHTML}</td>
                 <td>${statusBadge}</td>
-                <td><a href="expediente.html?id=${correo.id}" class="btn-primary" style="padding: 4px 10px; font-size: 0.8rem; text-decoration: none;">Abrir Expediente</a></td>
+                <td>
+                    <a href="analizador.html?id=${correo.id}" class="btn-primary" style="padding: 4px 10px; font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        Analizar IA
+                    </a>
+                </td>
             `;
             tbody.appendChild(tr);
         });
