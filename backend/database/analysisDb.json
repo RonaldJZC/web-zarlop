@@ -343,6 +343,186 @@
         }
       },
       "textoCompleto": 9461
+    },
+    {
+      "emailId": 1778012123456,
+      "fechaAnalisis": "2026-05-05T20:43:03.450Z",
+      "tiempoMs": 117202,
+      "motorUsado": "regex",
+      "geminiError": null,
+      "documentosLeidos": [
+        {
+          "id": "0ccf26e0_FORMATOS_DE_COTIZACION_DIRIS_LIMA_CENTRO_PARA_PROVEEDORES__1_.docx",
+          "name": "FORMATOS DE COTIZACION DIRIS LIMA CENTRO PARA PROVEEDORES (1).docx",
+          "type": "word",
+          "textLength": 6203,
+          "pages": null,
+          "isScanned": false,
+          "skipped": false,
+          "error": null
+        },
+        {
+          "id": "88e42908_MANT_CORRECTIVO_REFRIGERADORAS-_TDR.pdf",
+          "name": "MANT CORRECTIVO REFRIGERADORAS- TDR.pdf",
+          "type": "pdf",
+          "textLength": 0,
+          "pages": 10,
+          "isScanned": true,
+          "skipped": false,
+          "error": null
+        }
+      ],
+      "documentosEscaneados": [
+        "MANT CORRECTIVO REFRIGERADORAS- TDR.pdf"
+      ],
+      "ocrRequerido": true,
+      "tipoDocumento": "no_detectado",
+      "campos": {
+        "denominacion": {
+          "valor": "INDAGACION DE MERCADO HT 202630730 SERVICIO DE MANTENIMIENTO CORRECTIVO DE REFRIGERADORAS CONSERVADORAS DE MEDICAMENTOS DE ALMACEN ESPECIALIZADO DE MEDICAMENTOS DE LA DIRIS LIMA CENTRO",
+          "confianza": "media",
+          "fuente": "subject"
+        },
+        "objetoContratacion": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "finalidadPublica": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "areaUsuaria": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "actividadesRequeridas": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "repuestosInsumos": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "perfilTecnico": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "entregables": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "requisitosProveedor": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "resumenEjecutivo": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "entidad": {
+          "valor": "Dirección de Redes Integradas de Salud - Lima Centro",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "tipoSolicitud": {
+          "valor": "Mantenimiento Correctivo",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "tipoDocumento": "no_detectado",
+        "cantidad": {
+          "valor": "202630730 SERVICIO",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "marcaModelo": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "seriePatrimonial": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "plazo": {
+          "valor": "La oferta indicada incluye todos los tributos, instalación, pruebas, transportes, cotos laborales, conforme a la legislación vigente, así como cualquier otro costo que pueda tener incidencia sobre el valor del bien ofertado",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "garantia": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "formaPago": {
+          "valor": "Al contado",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "penalidades": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        },
+        "contacto": {
+          "valor": "Isaac Enrique Flores Ccaypani <estudiomercado1_oa@dirislimacentro.gob.pe>",
+          "confianza": "alta",
+          "fuente": "regex"
+        },
+        "valorEstimado": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_encontrado"
+        },
+        "lugarPrestacion": {
+          "valor": null,
+          "confianza": "baja",
+          "fuente": "no_detectado"
+        }
+      },
+      "semaforo": {
+        "estado": "incompleto",
+        "porcentaje": 32,
+        "detectados": 7,
+        "dudosos": 0,
+        "faltantes": 15,
+        "total": 22,
+        "detalles": {
+          "denominacion": "detectado",
+          "entidad": "detectado",
+          "tipoSolicitud": "detectado",
+          "cantidad": "detectado",
+          "plazo": "detectado",
+          "objetoContratacion": "faltante",
+          "garantia": "faltante",
+          "formaPago": "detectado",
+          "contacto": "detectado",
+          "marcaModelo": "faltante",
+          "finalidadPublica": "faltante",
+          "areaUsuaria": "faltante",
+          "actividadesRequeridas": "faltante",
+          "repuestosInsumos": "faltante",
+          "perfilTecnico": "faltante",
+          "entregables": "faltante",
+          "requisitosProveedor": "faltante",
+          "lugarPrestacion": "faltante",
+          "seriePatrimonial": "faltante",
+          "valorEstimado": "faltante",
+          "penalidades": "faltante",
+          "resumenEjecutivo": "faltante"
+        }
+      },
+      "textoCompleto": 8657
     }
   ]
 }
