@@ -4,12 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto - Zarlop S.A.C.</title>
-    <link rel="stylesheet" href="css/styles.css?v=10">
+    <title>Contacto | ZARLOP S.A.C. - Ingeniería y Soporte Técnico</title>
+    <meta name="description"
+        content="Contacta con ZARLOP S.A.C. para mantenimiento, reparación, automatización y soporte técnico de equipos médicos, de laboratorio, electrónicos e industriales en Perú.">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/styles.css?v=19">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <!-- Inline contact styles as fallback (Hostinger truncates styles.css) -->
+    <style>
+        .contact{padding:80px 0 100px;background:var(--bg-secondary,#f8f9fa)}
+        .contact-header{text-align:center;max-width:800px;margin:0 auto 60px}
+        .contact-main-title{font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--primary-dark,#0a4a7a);margin-bottom:20px;line-height:1.25}
+        .contact-main-subtitle{font-size:17px;line-height:1.75;color:var(--text-secondary,#64748b)}
+        .contact-actions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:60px}
+        .action-card{background:white;border-radius:24px;padding:40px 28px 32px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.06);transition:all .35s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.04)}
+        .action-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:24px 24px 0 0;opacity:0;transition:opacity .35s ease}
+        .action-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,.12)}
+        .action-card:hover::before{opacity:1}
+        #card-whatsapp::before{background:#25D366}
+        #card-phone::before{background:var(--primary-color,#0F6CBD)}
+        #card-location::before{background:#E74C3C}
+        #card-email::before{background:var(--secondary-color,#00A8A8)}
+        .action-icon{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:transform .3s ease}
+        .action-card:hover .action-icon{transform:scale(1.1)}
+        .action-icon svg{width:30px;height:30px}
+        .action-icon--whatsapp{background:rgba(37,211,102,.12);color:#25D366}
+        .action-icon--phone{background:rgba(15,108,189,.12);color:var(--primary-color,#0F6CBD)}
+        .action-icon--location{background:rgba(231,76,60,.12);color:#E74C3C}
+        .action-icon--email{background:rgba(0,168,168,.12);color:var(--secondary-color,#00A8A8)}
+        .action-title{font-size:18px;font-weight:700;color:var(--text-primary,#1e293b);margin-bottom:12px}
+        .action-text{font-size:14.5px;line-height:1.65;color:var(--text-secondary,#64748b);margin-bottom:20px;flex-grow:1}
+        .action-emails{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;flex-grow:1;width:100%}
+        .email-link{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--secondary-color,#00A8A8);font-weight:500;padding:7px 10px;background:rgba(0,168,168,.06);border-radius:10px;transition:all .25s ease;word-break:break-all;text-decoration:none}
+        .email-link:hover{background:rgba(0,168,168,.14);color:var(--secondary-dark,#007a7a)}
+        .email-link svg{flex-shrink:0;color:var(--secondary-color,#00A8A8)}
+        .action-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;font-weight:600;font-size:14px;transition:all .3s ease;text-decoration:none;width:100%;justify-content:center}
+        .action-btn--whatsapp{background:#25D366;color:white}
+        .action-btn--whatsapp:hover{background:#1fad53;box-shadow:0 6px 20px rgba(37,211,102,.35)}
+        .action-btn--phone{background:var(--primary-color,#0F6CBD);color:white}
+        .action-btn--phone:hover{background:var(--primary-dark,#0a4a7a);box-shadow:0 6px 20px rgba(15,108,189,.35)}
+        .action-btn--location{background:#E74C3C;color:white}
+        .action-btn--location:hover{background:#c0392b;box-shadow:0 6px 20px rgba(231,76,60,.35)}
+        .action-btn--email{background:var(--secondary-color,#00A8A8);color:white}
+        .action-btn--email:hover{background:var(--secondary-dark,#007a7a);box-shadow:0 6px 20px rgba(0,168,168,.35)}
+        .contact-extra-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+        .extra-box{background:white;border-radius:24px;padding:40px 36px;box-shadow:0 4px 20px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04);transition:all .35s ease}
+        .extra-box:hover{box-shadow:0 12px 35px rgba(0,0,0,.1)}
+        .extra-box-icon{width:52px;height:52px;background:rgba(15,108,189,.1);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--primary-color,#0F6CBD)}
+        .extra-box-icon svg{width:26px;height:26px}
+        .extra-box-title{font-size:20px;font-weight:700;color:var(--primary-dark,#0a4a7a);margin-bottom:20px}
+        .extra-box-text{font-size:15px;line-height:1.75;color:var(--text-secondary,#64748b)}
+        .schedule-list{display:flex;flex-direction:column;gap:12px}
+        .schedule-row{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--bg-secondary,#f8f9fa);border-radius:12px;transition:background .25s ease}
+        .schedule-row:hover{background:rgba(15,108,189,.06)}
+        .schedule-day{font-weight:600;color:var(--text-primary,#1e293b);font-size:15px}
+        .schedule-time{font-weight:500;color:var(--primary-color,#0F6CBD);font-size:15px}
+        .schedule-time--special{color:var(--secondary-color,#00A8A8);font-style:italic}
+        @media(max-width:1024px){.contact-actions-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:640px){.contact{padding:50px 0 70px}.contact-header{margin-bottom:40px}.contact-actions-grid{grid-template-columns:1fr;gap:16px}.action-card{padding:30px 24px 28px}.contact-extra-grid{grid-template-columns:1fr;gap:16px}.extra-box{padding:30px 24px}.schedule-row{flex-direction:column;align-items:flex-start;gap:4px}}
+    </style>
 </head>
 
 <body>
@@ -48,114 +104,132 @@
         </div>
     </header>
 
-    <!-- Contact Form Section -->
+    <!-- Contact Section - Modern -->
     <section class="contact">
         <div class="container">
-            <div class="contact-grid">
-                <div class="contact-info fade-up">
-                    <div class="info-card">
-                        <h3>Información General</h3>
-                        <p>Estamos disponibles para atender sus requerimientos técnicos y consultas comerciales.</p>
+            <!-- Section Header -->
+            <div class="contact-header fade-up">
+                <h2 class="contact-main-title">¿Necesita una solución técnica especializada?</h2>
+                <p class="contact-main-subtitle">Nuestro equipo técnico está preparado para atender consultas, diagnósticos preliminares, mantenimiento preventivo y correctivo, reparación electrónica, automatización, modernización e integración de soluciones para equipos médicos, de laboratorio, electrónicos e industriales.</p>
+            </div>
+
+            <!-- Action Cards Grid -->
+            <div class="contact-actions-grid fade-up">
+                <!-- WhatsApp Card -->
+                <div class="action-card" id="card-whatsapp">
+                    <div class="action-icon action-icon--whatsapp">
+                        <svg viewBox="0 0 448 512" fill="currentColor" width="30" height="30">
+                            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.1 106 27.1h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.2 3.7-5.5 5.5-9.2 1.9-3.7 1-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                        </svg>
                     </div>
+                    <h3 class="action-title">Atención inmediata</h3>
+                    <p class="action-text">Contáctenos directamente para recibir orientación técnica, evaluar su necesidad y coordinar una atención o visita especializada.</p>
+                    <a href="https://wa.me/51942803666?text=Hola,%20estoy%20interesado%20en%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20ingenier%C3%ADa%20biom%C3%A9dica%20de%20ZARLOP%20S.A.C." class="action-btn action-btn--whatsapp" target="_blank" id="btn-whatsapp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Enviar mensaje
+                    </a>
+                </div>
 
+                <!-- Phone Card -->
+                <div class="action-card" id="card-phone">
+                    <div class="action-icon action-icon--phone">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="30" height="30">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </div>
+                    <h3 class="action-title">Atención telefónica</h3>
+                    <p class="action-text">Comuníquese con nuestro equipo para consultas técnicas, coordinación de servicios, cotizaciones y seguimiento de requerimientos.</p>
+                    <a href="tel:+51942803666" class="action-btn action-btn--phone" id="btn-phone">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/></svg>
+                        Llamar ahora
+                    </a>
+                </div>
 
+                <!-- Location Card -->
+                <div class="action-card" id="card-location">
+                    <div class="action-icon action-icon--location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="30" height="30">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="action-title">Visítenos</h3>
+                    <p class="action-text">Consulte nuestra ubicación y llegue fácilmente a nuestras oficinas.</p>
+                    <a href="https://maps.google.com/?q=ZARLOP+SAC+Lima+Peru" class="action-btn action-btn--location" target="_blank" id="btn-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Ver en Google Maps
+                    </a>
+                </div>
 
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
+                <!-- Email Card -->
+                <div class="action-card" id="card-email">
+                    <div class="action-icon action-icon--email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="30" height="30">
+                            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="action-title">Contacto institucional</h3>
+                    <div class="action-emails">
+                        <a href="mailto:ingenieria@zarlopsac.com" class="email-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8"/></svg>
+                            ingenieria@zarlopsac.com
+                        </a>
+                        <a href="mailto:ventas@zarlopsac.com" class="email-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8"/></svg>
+                            ventas@zarlopsac.com
+                        </a>
+                        <a href="mailto:cotizaciones@zarlopsac.com" class="email-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8"/></svg>
+                            cotizaciones@zarlopsac.com
+                        </a>
+                    </div>
+                    <a href="mailto:ingenieria@zarlopsac.com" class="action-btn action-btn--email" id="btn-email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        Enviar correo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Extra Info: Schedule + Coverage -->
+            <div class="contact-extra-grid fade-up">
+                <!-- Schedule -->
+                <div class="extra-box" id="box-schedule">
+                    <div class="extra-box-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="extra-box-title">Horario de Atención</h3>
+                    <div class="schedule-list">
+                        <div class="schedule-row">
+                            <span class="schedule-day">Lunes a Viernes</span>
+                            <span class="schedule-time">08:00 AM – 06:00 PM</span>
                         </div>
-                        <h3>Correo Institucional</h3>
-                        <p><a href="mailto:zronald.zarlop@gmail.com">zronald.zarlop@gmail.com</a></p>
+                        <div class="schedule-row">
+                            <span class="schedule-day">Sábados</span>
+                            <span class="schedule-time">08:00 AM – 01:00 PM</span>
+                        </div>
+                        <div class="schedule-row">
+                            <span class="schedule-day">Domingos y feriados</span>
+                            <span class="schedule-time schedule-time--special">Previa coordinación</span>
+                        </div>
                     </div>
                 </div>
 
-                <form class="contact-form fade-up" id="contactForm" enctype="multipart/form-data">
-                    <div class="form-header" style="grid-column: 1 / -1; margin-bottom: 25px;">
-                        <h2 class="form-title" style="color: var(--primary-dark); font-size: 24px; margin-bottom: 10px;">Solicitud de Pre-Diagnóstico Técnico</h2>
-                        <p class="form-subtitle" style="color: var(--text-secondary); font-size: 15px;">Complete la información del equipo médico para que nuestro equipo técnico evalúe preliminarmente la falla reportada y se comunique con usted.</p>
+                <!-- Coverage -->
+                <div class="extra-box" id="box-coverage">
+                    <div class="extra-box-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
                     </div>
-
-                    <div class="form-group">
-                        <label for="name">Nombre completo</label>
-                        <input type="text" id="name" name="name" required placeholder="Ej. Juan Pérez">
-                    </div>
-                    <div class="form-group">
-                        <label for="institucion">Institución / Clínica / Centro de Salud</label>
-                        <input type="text" id="institucion" name="institucion" placeholder="Nombre del centro de salud">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Teléfono</label>
-                        <input type="tel" id="phone" name="phone" required placeholder="Ej. +51 999 999 999">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tipo_equipo">Tipo de equipo</label>
-                        <select id="tipo_equipo" name="tipo_equipo" required>
-                            <option value="">Seleccione el equipo...</option>
-                            <option value="Autoclave">Autoclave</option>
-                            <option value="Monitor de Signos Vitales">Monitor de Signos Vitales</option>
-                            <option value="Desfibrilador">Desfibrilador</option>
-                            <option value="Bomba de Infusión">Bomba de Infusión</option>
-                            <option value="Electrocardiógrafo">Electrocardiógrafo</option>
-                            <option value="Centrífuga de Laboratorio">Centrífuga de Laboratorio</option>
-                            <option value="Equipo de Rayos X">Equipo de Rayos X</option>
-                            <option value="Ultrasonido / Ecógrafo">Ultrasonido / Ecógrafo</option>
-                            <option value="Microscopio">Microscopio</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="tipo_falla">Tipo de falla</label>
-                        <select id="tipo_falla" name="tipo_falla" required>
-                            <option value="">Seleccione el tipo de falla...</option>
-                            <option value="No enciende">No enciende</option>
-                            <option value="Error en pantalla">Error en pantalla</option>
-                            <option value="Falla de sensores">Falla de sensores</option>
-                            <option value="Falla de presión / temperatura">Falla de presión / temperatura</option>
-                            <option value="Problema electrónico">Problema electrónico</option>
-                            <option value="Problema mecánico">Problema mecánico</option>
-                            <option value="Batería / fuente">Batería / fuente</option>
-                            <option value="Desconocida">Desconocida</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="marca">Marca del equipo</label>
-                        <input type="text" id="marca" name="marca" placeholder="Ej. GE Healthcare">
-                    </div>
-                    <div class="form-group">
-                        <label for="modelo">Modelo del equipo</label>
-                        <input type="text" id="modelo" name="modelo" placeholder="Ej. B40">
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="message">Descripción detallada de la falla</label>
-                        <textarea id="message" name="message" rows="4" required placeholder="Describa el problema que presenta el equipo..."></textarea>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="equipo_image">Adjuntar fotografía del equipo (opcional)</label>
-                        <input type="file" id="equipo_image" name="equipo_image" accept="image/*" class="file-input">
-                        <p class="file-help" style="font-size: 12px; color: #777; margin-top: 5px;">Formatos permitidos: JPG, PNG. Tamaño máx: 5MB.</p>
-                    </div>
-
-                    <div class="form-footer" style="grid-column: 1 / -1; margin-top: 20px;">
-                        <button type="submit" class="btn btn-primary full-width" style="margin-bottom: 20px;">Enviar Solicitud de Evaluación</button>
-                        <p class="form-disclaimer" style="font-size: 13px; color: #666; line-height: 1.5; text-align: center; font-style: italic; background: rgba(0,0,0,0.02); padding: 15px; border-radius: 10px;">
-                            "El presente formulario permite realizar una pre-evaluación técnica referencial. El diagnóstico definitivo y la cotización dependerán de la inspección técnica del equipo."
-                        </p>
-                    </div>
-                </form>
+                    <h3 class="extra-box-title">Cobertura</h3>
+                    <p class="extra-box-text">Brindamos servicios de mantenimiento, reparación, soporte técnico, automatización, modernización e integración de soluciones para equipos médicos, de laboratorio, electrónicos e industriales, atendiendo instituciones de salud, universidades, centros de investigación, laboratorios, empresas e instalaciones industriales.</p>
+                </div>
             </div>
         </div>
     </section>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -163,7 +237,8 @@
                 <div class="footer-col">
                     <img src="assets/logo-footer.png" alt="Zarlop S.A.C." class="footer-logo logo-white">
                     <p class="footer-description">
-                        Soluciones especializadas en ingeniería biomédica y mantenimiento electrónico de alta precisión.
+                        <strong style="color: white; display: block; margin-bottom: 8px; font-size: 14.5px; font-weight: 700;">Ingeniería Electrónica, Equipamiento y Automatización</strong>
+                        Soluciones de ingeniería electrónica, mantenimiento, reparación, automatización e integración para equipos médicos, de laboratorio, electrónicos e industriales.
                     </p>
                     <span class="footer-ruc">RUC: 20602591868</span>
                 </div>
@@ -171,10 +246,10 @@
                 <div class="footer-col">
                     <h4>Servicios</h4>
                     <ul class="footer-links">
-                        <li><a href="servicios.html">Mantenimiento Médico</a></li>
-                        <li><a href="servicios.html">Instalación Técnica</a></li>
-                        <li><a href="servicios.html">Asesoría Biomédica</a></li>
-                        <li><a href="servicios.html">Gestión de Equipos</a></li>
+                        <li><a href="servicios.html">Mantenimiento Especializado</a></li>
+                        <li><a href="servicios.html">Reparación Electrónica</a></li>
+                        <li><a href="servicios.html">Automatización y Control</a></li>
+                        <li><a href="servicios.html">Ingeniería y Modernización</a></li>
                     </ul>
                 </div>
 
@@ -205,7 +280,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 Zarlop S.A.C. - Soluciones Electrónicas y Biomédicas. Todos los derechos reservados.</p>
+                <p>&copy; 2026 ZARLOP S.A.C. – Ingeniería Electrónica y Soluciones Técnicas.</p>
             </div>
         </div>
     </footer>
